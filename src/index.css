@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+@plugin "tailwindcss-animate";
+
+body {
+  @apply scroll-smooth;
+  font-family: "Roboto", serif;
+  font-optical-sizing: auto;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.animate-ticker {
+  animation: ticker 30s linear infinite;
+}
+/*  */
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.slide-out-left {
+  animation: slideOutLeft 0.3s forwards;
+}
+.slide-in-right {
+  animation: slideInRight 0.3s forwards;
+}
+.slide-out-right {
+  animation: slideOutRight 0.3s forwards;
+}
+.slide-in-left {
+  animation: slideInLeft 0.3s forwards;
+}
+/*  */
+.slideinP {
+  position: relative;
+  overflow: hidden;
+}
+.slideinP .text {
+  position: relative;
+  z-index: 10;
+  transition: all 0.5s ease-in;
+}
+
+.slideinP #cover-slide {
+  content: "";
+  position: absolute;
+  top: 0; /* Ensure it's placed correctly */
+  left: -100%; /* Ensure it's placed correctly */
+  width: 100%; /* Make sure it covers the area */
+  height: 100%; /* Make sure it covers the area */
+  background: #f49d3f;
+  transition: left 0.5s ease-in;
+}
+.slideinP:hover .text {
+  color: white;
+}
+.slideinP:hover #cover-slide {
+  left: 0;
+}
+
+.parentline {
+  position: relative;
+}
+
+.parentline::after {
+  content: "";
+  width: 20%;
+  height: 4px;
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  transform: translateX(-50%, 0);
+  background: #f49d3f;
+  z-index: 1;
+}
+.bg-gradient-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 60, 1));
+  opacity: 0.5;
+}
+.bg-gra {
+  background: linear-gradient(to top, rgba(0, 0, 63, 0.4), rgba(0, 0, 63, 0.4));
+}
+.bg1 {
+  background: url("../assets/images/img1.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bg2 {
+  background: url("../assets/images/managment.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bg3 {
+  background: url("../assets/images/services.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.bg4 {
+  background: url("assets/images/sign-up-form-bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (width > 1500px) {
+  .adjustWidth_media {
+    width: 60%;
+  }
+}
+@media (1200px < width <= 1500px) {
+  .adjustWidth_media {
+    width: 85%;
+  }
+}
+
+@media (700px < width <= 1199px) {
+  .adjustWidth_media {
+    width: 95%;
+    height: auto;
+  }
+}
