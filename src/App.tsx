@@ -14,7 +14,7 @@ function App() {
   return (
     <Routes>
       {/* Wrap pages inside Layout */}
-      <Route path="/fort/" element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="services" element={<Services />} />
