@@ -10,40 +10,43 @@ import { useState } from "react";
 const navItems = [
   {
     title: "Home",
-    href: "/",
+    href: "/fort/",
     subItems: [],
   },
   {
     title: "About Us",
-    href: "/about",
+    href: "about",
     subItems: [
-      { title: "Who we are", href: "/about#whoweare" },
-      { title: "Meet the team", href: "/about#meettheteam" },
+      { title: "Who we are", href: "about#whoweare" },
+      { title: "Meet the team", href: "about#meettheteam" },
     ],
   },
   {
     title: "Services",
-    href: "/services",
+    href: "services",
     subItems: [
-      { title: "Advisory", href: "/services?page=Advisory Services" },
+      { title: "Advisory", href: "services?page=Advisory Services" },
       {
         title: "Securities Trading",
-        href: "/services?page=Securities Trading",
+        href: "services?page=Securities Trading",
       },
-      { title: "Asset Management", href: "/services?page=Asset Management" },
+      {
+        title: "Asset Management",
+        href: "services?page=Asset Management",
+      },
     ],
   },
   {
     title: "Blogs",
-    href: "/blog",
+    href: "blog",
     subItems: [
-      { title: "Articles", href: "/blog" },
-      { title: "Research", href: "/research" },
+      { title: "Articles", href: "blog" },
+      { title: "Research", href: "research" },
     ],
   },
   {
     title: "Contact",
-    href: "/contact",
+    href: "contact",
     subItems: [],
   },
 ];
@@ -64,7 +67,7 @@ const Navbar = () => {
 
   const NavDesktop = () => (
     <nav className="hidden lg:flex items-center justify-between w-full px-[5%] py-4 bg-white md:fixed z-50 top-0 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
-      <Link to="/" className="w-[150px]">
+      <Link to="/fort/" className="w-[150px]">
         <img src={logo} alt="Logo" className="w-full" />
       </Link>
 
@@ -139,7 +142,7 @@ const Navbar = () => {
           Sign In
         </button>
         <button
-          onClick={() => navigate("/createaccount")}
+          onClick={() => navigate("createaccount")}
           className="px-4 py-2 bg-[#F49D3F] text-white rounded-xl hover:bg-opacity-90 transition-colors"
         >
           Open An Account
@@ -150,7 +153,7 @@ const Navbar = () => {
   const NavMobile = () => (
     <div className="lg:hidden fixed top-0 w-full bg-white shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] z-50">
       <div className="flex justify-between items-center p-4">
-        <Link to="/home" className="w-[120px]" onClick={toggleMobileMenu}>
+        <Link to="/fort/" className="w-[120px]" onClick={toggleMobileMenu}>
           <img src={logo} alt="Logo" className="w-full" />
         </Link>
 
@@ -234,7 +237,7 @@ const Navbar = () => {
                 </button>
                 <button
                   onClick={() => {
-                    navigate("/createaccount");
+                    navigate("createaccount");
                     toggleMobileMenu(); // Close mobile menu on button click
                   }}
                   className="w-full py-3 bg-[#F49D3F] text-white rounded-xl"

@@ -116,7 +116,7 @@ function ServicesContent() {
     } else {
       // Set Securities Trading as default when no page parameter is present
       setSelectedService(serviceContent["Securities Trading"]);
-      navigate("/services?page=Securities Trading");
+      navigate("?page=Securities Trading");
     }
 
     const checkScroll = () => {
