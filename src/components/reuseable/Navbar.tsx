@@ -10,7 +10,7 @@ import { useState } from "react";
 const navItems = [
   {
     title: "Home",
-    href: "/fort/",
+    href: "",
     subItems: [],
   },
   {
@@ -58,12 +58,6 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
-
-  // const handleNavItemClick = () => {
-  //   // navigate(href);
-  //   setMobileMenuOpen(false);
-  //   setActiveDropdown(null);
-  // };
 
   const NavDesktop = () => (
     <nav className="hidden lg:flex items-center justify-between w-full px-[5%] py-4 bg-white md:fixed z-50 top-0 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
@@ -120,7 +114,7 @@ const Navbar = () => {
                   <Link
                     key={subItem.title}
                     to={subItem.href}
-                    className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-[#F49D3F]"
+                    className="block px-4 py-2 text-sm hover:bg-gray-100 hover:text-[#F49D3F] capitalize"
                     onClick={() => setActiveDropdown(null)}
                   >
                     {subItem.title}
@@ -179,7 +173,7 @@ const Navbar = () => {
                       className={`text-[16px] font-medium ${
                         location.pathname === item.href ? "text-[#F49D3F]" : ""
                       }`}
-                      onClick={toggleMobileMenu} // Close mobile menu on link click
+                      onClick={toggleMobileMenu}
                     >
                       {item.title}
                     </Link>
@@ -215,7 +209,7 @@ const Navbar = () => {
                             key={subItem.title}
                             to={subItem.href}
                             className="block text-[15px] py-1 hover:text-[#F49D3F]"
-                            onClick={toggleMobileMenu} // Close mobile menu on sub-link click
+                            onClick={toggleMobileMenu}
                           >
                             {subItem.title}
                           </Link>
@@ -229,7 +223,7 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     navigate("https://185.80.93.181/customers/");
-                    toggleMobileMenu(); // Close mobile menu on button click
+                    toggleMobileMenu();
                   }}
                   className="w-full py-3 border border-[#F49D3F] text-[#F49D3F] rounded-xl"
                 >
@@ -238,11 +232,11 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     navigate("createaccount");
-                    toggleMobileMenu(); // Close mobile menu on button click
+                    toggleMobileMenu();
                   }}
                   className="w-full py-3 bg-[#F49D3F] text-white rounded-xl"
                 >
-                  Open An Account
+                  Open an Account
                 </button>
               </div>
             </div>

@@ -3,18 +3,21 @@
 
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import { blogPosts } from "./reuseable/blogData";
 import { useEducationStore } from "../store/userStore";
 import { Link } from "react-router-dom";
+import { useGetArticles } from "../api/get/getData";
+import blogimg from "../assets/images/img3.jpg";
+import LoadingOverlay from "./OverlayLoader";
 
 const Blog = () => {
-  const [limit] = useState<number>(3);
+  const [limit] = useState<number>(4);
 
   const { addEducation } = useEducationStore();
 
   const handleblog = (value: any) => {
     addEducation(value);
   };
+  const { data: blogPosts, isFetching } = useGetArticles("articles.php");
 
   const truncateTitle = (title: string, wordLimit: number) => {
     const words = title.split(" ");
@@ -26,6 +29,8 @@ const Blog = () => {
 
   return (
     <section className="md:my-[5rem] my-[1rem] w-full gap-8  xl:px-[8%] md:px-[5%] px-5  ">
+      {isFetching && <LoadingOverlay />}
+
       <div className=" parentline md:pl-[5%] shadow-sm">
         <h1 className=" text-[#692371] md:text-[45px] text-[25px] font-semibold lg:leading-[70px] md:leading-[60px]">
           Blogs
@@ -33,27 +38,43 @@ const Blog = () => {
       </div>
       <div className="w-full mt-[4%]">
         <div className="flex flex-col md:flex-row justify-between items-center gap-5">
-          {blogPosts.map((post, idx) => (
+          {blogPosts?.data?.map((post: any, idx: number) => (
             <div
-              key={post.id}
+              key={post.news_id}
               className={`lg:w-[40%] md:-w[300%] min-h-[250px] m-auto w-full shadow-lg ${
                 idx > 2 ? "hidden" : "block"
               }`}
             >
               <Link
-                to={`blog/${post.id}&${post.title}`}
+                to={`blog/${post.news_id}&${post.news_title}`}
                 onClick={() => handleblog(post)}
               >
-                <img src={post.image} alt={post.title} />
+                <div className="">
+                  {post?.photo !== "" ? (
+                    <img
+                      src={post?.photo}
+                      alt={post?.name}
+                      className="object-cover md:w-[420px] w-full h-full md:h-[250px]"
+                    />
+                  ) : (
+                    <img
+                      src={blogimg}
+                      alt="img"
+                      className="md:w-[420px] w-full h-full md:h-[250px] object-cover"
+                    />
+                  )}
+                </div>
                 <div className="mt-[4%] p-3">
                   <h2 className="text-[#692371] md:text-[30px] text-[20px] font-semibold leading-10 min-h-[75px]">
-                    {truncateTitle(post.title, limit)}
+                    {truncateTitle(post.news_title, limit)}
                   </h2>
                   <p className="text-[18px] text-[#692371] mt-2">
-                    {post.author}
+                    {post.publisher}
                   </p>
                   <div className="flex items-center justify-between gap-2 mt-[2%]">
-                    <p className="text-[14px] text-[#692371]">{post.date}</p>
+                    <p className="text-[14px] text-[#692371]">
+                      {post.news_date}
+                    </p>
                     <ChevronRight
                       size={30}
                       color="#692371"

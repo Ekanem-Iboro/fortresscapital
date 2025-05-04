@@ -14,8 +14,28 @@ const serviceContent: any = {
   "Securities Trading": {
     title: "Securities Trading",
     mainImage: securities,
-    description:
-      "We invest for the future on behalf of our clients, helping more and more Nigerians enjoy financial well-being today and for generations to come.",
+    description: (
+      <div className="space-y-4">
+        <div className="mb-4">
+          We provide seamless access to a diverse range of investment
+          opportunities including equities, bonds, and other financial
+          instruments on the <strong>Nigerian Exchange (NGX), </strong> National
+          Association of Securities Dealers <strong>(NASD), </strong> and
+          Financial Market Dealer Quotation <strong> (FMDQ).</strong>
+        </div>
+
+        <div className="mb-4">
+          We have been registered as a broker-dealer with the SEC for over
+          twenty years, ensuring efficient trade execution, competitive
+          commissions, and market intelligence to guide your investment
+          decisions. We provide online real-time access to the market,
+          leveraging technology. With almost three decades of experience and
+          expertise, our clients count on the market insight of our formidable
+          stockbrokers to help them access liquidity, and minimize market
+          impact.
+        </div>
+      </div>
+    ),
     detailedContent: [
       {
         subtitle: "Comprehensive Trading Solutions",
@@ -25,17 +45,12 @@ const serviceContent: any = {
         subtitle: "Market Analysis & Research",
         text: "Stay ahead with our comprehensive market analysis and research reports. Our team of analysts provides detailed insights into market trends, helping you make informed investment decisions.",
       },
-      {
-        subtitle: "Portfolio Management",
-        text: "We offer personalized portfolio management services, ensuring your investments align with your financial goals and risk tolerance. Our experienced traders monitor market conditions continuously to optimize your returns.",
-      },
     ],
     features: [
       "Real-time market data access",
       "Competitive trading fees",
       "Expert execution services",
       "Risk management solutions",
-      "Regular portfolio reviews",
     ],
     ctaLink: "/createaccount",
     ctaText: "Open An Account",
@@ -43,8 +58,29 @@ const serviceContent: any = {
   "Asset Management": {
     title: "Asset Management",
     mainImage: management,
-    description:
-      "With over X billion naira in assets under our supervision, Fortress Capital Limited delivers investment and advisory services.",
+    description: (
+      <div className="space-y-4">
+        <div className="mb-4">
+          At Fortress Capital Limited, we understand that wealth management is
+          both an art and a science. Our <strong> Asset Management </strong>{" "}
+          services are carefully designed to optimize your portfolio while
+          ensuring financial security and long-term wealth creation. We develop
+          personalized investment portfolios that align favourably with your
+          risk tolerance, financial objectives, and market conditions. We take
+          on a diversified investment approach, offering you a broad range of
+          asset classes, including equities, and fixed income to ensure a
+          resilient portfolio. Our clients find us trustworthy as we ensure
+          transparency in reporting, keeping you informed with regular and
+          detailed portfolio performance reports.
+        </div>
+
+        <div className="mb-4">
+          Our approach to asset management is centred on delivering{" "}
+          <strong>consistent, long-term value, </strong> ensuring your capital
+          works efficiently for you.
+        </div>
+      </div>
+    ),
     detailedContent: [
       {
         subtitle: "Professional Portfolio Management",
@@ -63,7 +99,6 @@ const serviceContent: any = {
       "Customized investment strategies",
       "Regular portfolio rebalancing",
       "Comprehensive reporting",
-      "Tax-efficient investing",
       "Dedicated account management",
     ],
     ctaLink: "/createaccount",
@@ -73,7 +108,7 @@ const serviceContent: any = {
     title: "Advisory Services",
     mainImage: Advisory,
     description:
-      "Our team of experienced financial experts provide renowned institutions, high net worth individuals and retail clients with deep insights.",
+      "Making sound financial decisions is crucial for long-term success. Our Financial Advisory services involve the investment of the client's resources in the capital and money market, real estate, and other investment instruments by Fortress Capital Limited. Decision-making on the asset allocation of the client's resources could be in conjunction with the client or at our sole discretion. To invest successfully, we formulate a portfolio management process to ensure that your investments are managed as a spectrum of diversified investments rather than unrelated individual holdings. The wealth portfolio management mandate allows you to sit down with your relationship manager and define your investment policy. This investment policy defines your investment objectives (e.g. preservation of capital, risk tolerance, expected rate of return), constraints (e.g. client's values or ethics), and management style of the various asset classes contained in your portfolio. We then transform these investment policies into a tailor-made portfolio suited to your person. Our team of experienced financial experts provides renowned institutions, high-net-worth individuals, and retail clients with innovative insights.",
     detailedContent: [
       {
         subtitle: "Strategic Financial Planning",
@@ -90,8 +125,6 @@ const serviceContent: any = {
     ],
     features: [
       "Personalized financial strategies",
-      "Estate planning services",
-      "Tax optimization advice",
       "Retirement planning",
       "Investment education",
     ],
@@ -139,6 +172,16 @@ function ServicesContent() {
     <div className="relative min-h-screen">
       {/* Hero Section */}
       <header className="w-full relative">
+        <div className="w-full flex flex-col items-center md:px-[22%] px-1 mb-9 md:text-center">
+          <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%] ">
+            Our Services
+          </h1>
+          <p className="md:text-[20px]   leading-[30px] ">
+            At Fortress Capital Limited, we are committed to providing
+            exceptional financial services tailored to meet the unique needs of
+            our clients.
+          </p>
+        </div>
         <div className="relative h-[300px] md:h-[400px] lg:h-[600px]">
           <img
             src={abouthero}
@@ -273,6 +316,17 @@ function ServicesContent() {
             Please select a service to view details
           </div>
         )}
+        <div className="md:px-[15rem] px-2">
+          <div className="bg-gray-50 p-4 md:p-6 rounded-xl">
+            <h3 className="text-lg md:text-xl text-gray-700 p-8">
+              At <strong> Fortress Capital Limited, </strong> we pride ourselves
+              on delivering superior service and building lasting relationships
+              with our clients. Our young and dynamic management team is
+              dedicated to providing efficient and value-added services,
+              reflecting our commitment to your financial success.
+            </h3>
+          </div>
+        </div>
       </main>
 
       {/* Scroll Indicator */}
@@ -281,6 +335,7 @@ function ServicesContent() {
           <ArrowDown className="text-[#F49D3F] w-6 h-6 md:w-8 md:h-8" />
         </div>
       )}
+      {/*  */}
 
       <Footer />
     </div>

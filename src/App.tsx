@@ -9,14 +9,16 @@ import CreateAccount from "./pages/auth/createAccount";
 import BlogDetails from "./pages/BlogDetails";
 import Blog from "./pages/Blog";
 import Research from "./pages/Reserch";
+import AboutDetails from "./pages/AboutDetails";
 
 function App() {
   return (
     <Routes>
       {/* Wrap pages inside Layout */}
-      <Route path="/" element={<Layout />}>
+      <Route path="" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="about/:id" element={<AboutDetails />} />
         <Route path="services" element={<Services />} />
         <Route path="contact" element={<Contact />} />
         <Route path="research" element={<Research />} />

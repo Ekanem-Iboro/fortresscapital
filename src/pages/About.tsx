@@ -3,20 +3,32 @@ import abouthero from "../assets/images/whoweare.jpg";
 import { CardComp } from "../components/reuseable/Card";
 import TestimonialPage from "../components/Testimonal";
 import VisionMission from "../components/MissionVission";
+import { useGetBoardDirectors, useGetTeamMembers } from "../api/get/getData";
 
 const About = () => {
+  const { data: teamMembers } = useGetTeamMembers("team_members.php");
+  const { data: boardDirectors } = useGetBoardDirectors("team_members.php");
+
   return (
     <>
       <header className=" w-full">
-        <div className="w-full flex flex-col items-center md:px-[22%] px-1 md:text-center">
-          <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%] ">
-            Who we are
+        <div className="w-full flex flex-col px-1 md:text-center">
+          <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%]  ">
+            Who We Are
           </h1>
           <p className="md:text-[20px] text-[]  leading-[30px] ">
-            Fortress Capital Limited is one of Nigeria’s leading providers of
-            securities trading, financial advisory and assets management
-            services. We guide and support institutions, high network and retail
-            clients to maximize returns on overall investments.
+            Fortress Capital Limited is one of Nigeria's leading investment
+            banking firms committed to providing top-tier financial services
+            tailored to clients' unique needs. The company started business
+            operations as Heritage Investments and Securities in 1997, and over
+            the years provided investment-related services in the areas of
+            Securities Trading, Asset Management, and Financial Advisory. A
+            trading licensed holder on the Nigerian Exchange (NGX), National
+            Association of Securities Dealers (NASD), as well as a dealing
+            member specialist on the Financial Market Dealer Quotation (FMDQ).
+            Fortress Capital Limited has in the last three decades leveraged
+            deep market expertise and innovative strategies to support clients
+            like you to build, grow, and protect wealth.
           </p>
         </div>
         <div>
@@ -33,66 +45,6 @@ const About = () => {
           className="w-full  xl:px-[7%] lg:[2%] px-1  mt-[5%] "
           id="whoweare"
         >
-          {/* <div className="md:flex justify-between w-full block">
-            <div className="md:w-[50%] w-full">
-              <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%] ">
-                What We Do
-              </h1>
-              <p className="text-[14px]  leading-[30px] lg:pr-[17%] md:pr-[5%] pr-0 ">
-                <span className="text-[30px] text-slate-500"> &quot; </span>{" "}
-                Foretress is dedicated to providing a seamless and intuitive
-                investment platform for individuals and businesses alike. We
-                simplify the complexities of the financial markets, offering a
-                diverse range of investment options that cater to all levels of
-                experience. From stocks and bonds to innovative assets, our
-                platform enables users to build a tailored portfolio that aligns
-                with their financial goals. We also provide real-time data,
-                expert analysis, and personalized recommendations, ensuring that
-                our users have the tools they need to make informed decisions
-                and achieve sustainable growth{" "}
-                <span className="text-[30px] text-slate-500"> &quot; </span>
-              </p>
-            </div>
-            <div className="md:w-[50%] w-full flex justify-end">
-              <Image src={whatwedo} alt="" className="md:w-[500px] w-full" />
-            </div>
-          </div>
-          <div className="md:flex justify-between w-full block my-[7%]">
-            <div className="md:w-[50%] w-full md:flex hidden justify-start">
-              <Image src={mission} alt="" className="md:w-[500px] w-full" />
-            </div>
-            <div className="md:w-[50%] w-full  justify-end ">
-              <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%] lg:pl-[17%] md:p1-[5%] pl-0">
-                Our Mission
-              </h1>
-              <p className="text-[14px]  leading-[30px] lg:pl-[17%] md:p1-[5%] pl-0 ">
-                <span className="text-[30px] text-slate-500"> &quot; </span> To
-                be the choice investment management firm with the most satisfied
-                clients by rendering qualitative services and always adding
-                value in all our undertakings in an ethical and professional
-                manner.
-                <span className="text-[30px] text-slate-500"> &quot; </span>
-              </p>
-            </div>
-           
-          </div>*/}
-          {/* <div className="md:flex justify-between items-center w-full block">
-            <div className="md:w-[50%] w-full">
-              <h1 className="md:text-[42px] text-[30px] font-semibold text-[#f49d3f] mb-[2%] ">
-                Our Vision | Mission
-              </h1>
-              <p className="md:text-[18px] text-[14px]  leading-[30px] lg:pr-[20%] md:pr-[5%] pr-0 ">
-                <span className="text-[30px] text-slate-500"> &quot; </span>To
-                be Nigeria’s most trusted provider of excellent assets
-                management services. Mission: To safeguard and maximize client’s
-                wealth with utmost regard for transparency and professionalism.
-                <span className="text-[30px] text-slate-500"> &quot; </span>
-              </p>
-            </div>
-            <div className="md:w-[50%] md:mt-0 mt-8 w-full flex justify-end">
-              <Image src={vision} alt="" className="md:w-[500px] w-full" />
-            </div>
-          </div> */}
           <VisionMission />
           <div className="w-full   ">
             <div className="border-b border-slate-500 w-full my-14"></div>
@@ -117,7 +69,7 @@ const About = () => {
             Board of Directors
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((item, idx) => (
+            {boardDirectors?.data?.map((item: string, idx: number) => (
               <CardComp key={idx} item={item} />
             ))}
           </div>
@@ -128,7 +80,7 @@ const About = () => {
             Management Team
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((item, idx) => (
+            {teamMembers?.data?.map((item: string, idx: number) => (
               <CardComp key={idx} item={item} />
             ))}
           </div>
@@ -141,10 +93,10 @@ const About = () => {
 
 export default About;
 
-const teamMembers = [
-  { name: "Emma Collins", position: "Chief Executive Officer" },
-  { name: "Michael Thompson", position: "Chief Technology Officer" },
-  { name: "Sophia Ramirez", position: "Head of Investment Strategy" },
-  { name: "David Lee", position: "Chief Marketing Officer" },
-  { name: "Olivia Chen", position: "Client Relations Manager" },
-];
+// const teamMembers = [
+//   { name: "Emma Collins", position: "Chief Executive Officer" },
+//   { name: "Michael Thompson", position: "Chief Technology Officer" },
+//   { name: "Sophia Ramirez", position: "Head of Investment Strategy" },
+//   { name: "David Lee", position: "Chief Marketing Officer" },
+//   { name: "Olivia Chen", position: "Client Relations Manager" },
+// ];

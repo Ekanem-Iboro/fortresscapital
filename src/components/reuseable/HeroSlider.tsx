@@ -30,7 +30,7 @@ function Slider() {
             {
               title: ["Building Fortunes,", "Securing Futures"],
               description:
-                "You want to grow wealth for your future, we pledge to help you secure the best investment options",
+                "If you want to grow wealth for your future, we pledge to help you secure the best investment options.",
               image: slide1,
               buttons: [
                 // { text: "Open An Account", href: "/sign-up", primary: true },
@@ -38,19 +38,6 @@ function Slider() {
                   text: "Read More",
                   href: "/services?page=Asset Management",
                   primary: false,
-                },
-              ],
-            },
-            {
-              title: ["In Wealth Creation,", "Knowledge Is Everything."],
-              description:
-                "Trust our financial advisors to ensure you keep living your best life.",
-              image: slide2,
-              buttons: [
-                {
-                  text: "Read More",
-                  href: "/services?page=Advisory Services",
-                  primary: true,
                 },
               ],
             },
@@ -68,6 +55,20 @@ function Slider() {
                 },
               ],
             },
+            {
+              title: ["In Wealth Creation,", "Knowledge Is Everything."],
+              description:
+                "Trust our financial advisors to ensure you keep living your best life.",
+              image: slide2,
+              buttons: [
+                {
+                  text: "Read More",
+                  href: "/services?page=Advisory Services",
+                  primary: true,
+                },
+              ],
+            },
+
             {
               title: ["Stay Ahead Of The Game;", "We've Got The Best Brains"],
               description:

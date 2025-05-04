@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Footer from "../components/Footer";
 import { PaginationBlog } from "../components/paginationBlog";
-import { blogPosts } from "../components/reuseable/blogData";
 import { useEducationStore } from "../store/userStore";
 import abouthero from "../assets/images/whoweare.jpg";
+import { useGetArticles } from "../api/get/getData";
+import blogimg from "../assets/images/img3.jpg";
+import LoadingOverlay from "../components/OverlayLoader";
 
 const Blog = () => {
   const [limit] = useState<number>(4);
@@ -13,12 +15,12 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemPerPage] = useState(5);
 
+  const { addEducation } = useEducationStore();
+  const { data: blogPosts, isFetching } = useGetArticles("articles.php");
   // Calculate the indices for pagination
   const lastItemIndex = currentPage * itemPerPage;
   const firstItemIndex = lastItemIndex - itemPerPage;
-  const currentPosts = blogPosts?.slice(firstItemIndex, lastItemIndex);
-
-  const { addEducation } = useEducationStore();
+  const currentPosts = blogPosts?.data?.slice(firstItemIndex, lastItemIndex);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleblog = (value: any) => {
@@ -43,6 +45,7 @@ const Blog = () => {
 
   return (
     <div className="w-full">
+      {isFetching && <LoadingOverlay />}
       <header className=" w-full ">
         <div>
           <img
@@ -56,33 +59,45 @@ const Blog = () => {
         blogs
       </p>
       <div className=" lg:block block md:grid md:grid-cols-2">
-        {currentPosts?.map((item) => (
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {currentPosts?.map((item: any) => (
           <div
             className="m-auto shadow-xl mt-[4%] mb-7 lg:flex md:block gap-8  w-full rounded-2xl overflow-hidden bg-slate-50 adjustWidth_media"
-            key={item.id}
+            key={item.news_id}
           >
-            <img
-              src={item.image}
-              alt=""
-              className="md:w-[420px] w-full h-full md:h-[250px] object-cover"
-            />
+            <div className="">
+              {item?.photo !== "" ? (
+                <img
+                  src={item?.photo}
+                  alt={item?.name}
+                  className="object-cover md:w-[420px] w-full h-full md:h-[250px]"
+                />
+              ) : (
+                <img
+                  src={blogimg}
+                  alt=""
+                  className="md:w-[420px] w-full h-full md:h-[250px] object-cover"
+                />
+              )}
+            </div>
+
             <div className="p-6">
               <h1 className="lg:text-[24px] md:text-[18px] font-bold mb-4 text-slate-500">
-                {truncateTitle(item.title, limit)}
+                {truncateTitle(item.news_title, limit)}
               </h1>
               <p className="lg:text-md md:text-sm">
-                {truncateDesc(item.description, limitDesc)}
+                {truncateDesc(item.news_content_short, limitDesc)}
               </p>
               <div className="flex mt-[10%] items-center justify-between border-t-2 border-slate-300 pt-4">
                 <div>
                   <p className="text-[#692371] font-bold text-[14px]">
                     Author:{" "}
                     <span className="text-slate-700 font-medium text-[12px]">
-                      {item.author}
+                      {item.publisher}
                     </span>
                   </p>
                   <p className="text-[14px] text-[#f49d3f] font-semibold">
-                    {item.date}
+                    {item.news_date}
                   </p>
                 </div>
                 <div className="flex lg:flex-row flex-col items-center justify-end">
@@ -90,7 +105,12 @@ const Blog = () => {
                     className="slideinP px-4 py-2 text-white bg-[#692371] rounded-md"
                     onClick={() => handleblog(item)}
                   >
-                    <a href={`blog/${item.id}&${item.title.slice(0, 30)}`}>
+                    <a
+                      href={`blog/${item.news_id}&${item.news_title.slice(
+                        0,
+                        30
+                      )}`}
+                    >
                       <p className="text">Read More</p>
                       <p id="cover-slide"></p>
                     </a>
@@ -103,7 +123,7 @@ const Blog = () => {
       </div>
       <div className="mt-11">
         <PaginationBlog
-          totalItems={blogPosts.length}
+          totalItems={blogPosts?.data?.length}
           itemPerPage={itemPerPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

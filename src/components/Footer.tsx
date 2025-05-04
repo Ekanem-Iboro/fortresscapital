@@ -62,12 +62,12 @@ export default Footer;
 const footerData = {
   links: [
     { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "About", href: "about" },
+    { name: "Contact", href: "contact" },
   ],
   services: [
-    { name: "Securities Trading", href: "/services?page=Securities Trading" },
-    { name: "Asset Management", href: "/services?page=Asset Management" },
-    { name: "Advisory Services", href: "/services?page=Advisory Services" },
+    { name: "Securities Trading", href: "services?page=Securities Trading" },
+    { name: "Asset Management", href: "services?page=Asset Management" },
+    { name: "Advisory Services", href: "services?page=Advisory Services" },
   ],
 };

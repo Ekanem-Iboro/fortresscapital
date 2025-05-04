@@ -9,19 +9,19 @@ const OurService = () => {
       title: "Securities Trading",
       image: securities,
       description:
-        "We invest for the future on behalf of our clients, helping more and more Nigerians enjoy financial well-being today and for generations to come...",
+        "We provide seamless access to a diverse range of investment opportunities including equities, bonds, and other financial instruments on the Nigerian Exchange (NGX)...",
     },
     {
       title: "Asset Management",
       image: management,
       description:
-        "With over X billion naira in assets under our supervision, Fortress Capital Limited delivers investment and advisory services...",
+        "At Fortress Capital Limited, we understand that wealth management is both an art and a science. Our Asset Management services are carefully designed to optimize your portfolio while ensuring financial security and long-term wealth creation...",
     },
     {
       title: "Advisory Services",
       image: Advisory,
       description:
-        "Our team of experienced financial experts provide renowned institutions, high net worth individuals and retail clients with deep insights...",
+        "Making sound financial decisions is crucial for long-term success. Our Financial Advisory services involve the investment of the client's resources in the capital and money market, real estate, and other investment instruments by Fortress Capital Limited...",
     },
   ];
 
@@ -54,12 +54,12 @@ const OurService = () => {
                 <p className="text-[21px] lg:text-2xl text-[#F49D3F] font-semibold mb-4 group-hover:text-[#692371] transition-colors duration-300">
                   {service.title}
                 </p>
-                <p className="text-base text-gray-600 mb-6 line-clamp-3">
+                <p className="text-base text-gray-600 mb-6 line-clamp-4">
                   {service.description}
                 </p>
                 <div className="flex justify-end">
                   <Link
-                    to={`/services?page=${encodeURIComponent(service.title)}`}
+                    to={`services?page=${encodeURIComponent(service.title)}`}
                     className="inline-flex items-center gap-2 text-white bg-[#F49D3F] rounded-lg px-6 py-3 hover:bg-[#692371] transition-colors duration-300 group-hover:shadow-md"
                   >
                     Read more
