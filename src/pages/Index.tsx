@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="w-full">
       <Slider />
-      <section className="md:mt-[8rem] mt-[2rem]">
+      <section className="">
         {/* <div className="bg-custom-pattern   rounded-lg py-10 flex justify-center items-center">
           <div className=" md:w-[50%] w-full p-4 m-auto min:h-[250px]   rounded-xl overflow-hidden ">
             <h1 className="md:text-[50px] text-[30px] font-semibold text-white mb-[2%] lg:px-[6%] md:px-[5%] px-0 text-center">

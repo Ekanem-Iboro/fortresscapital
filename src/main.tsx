@@ -14,7 +14,8 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename="/fort">
+      {/* <BrowserRouter basename="/fort"> */}
+      <BrowserRouter>
         <App />
         <ToastContainer />
       </BrowserRouter>

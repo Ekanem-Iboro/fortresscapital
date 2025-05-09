@@ -28,11 +28,11 @@ const Blog = () => {
   };
 
   return (
-    <section className="md:my-[5rem] my-[1rem] w-full gap-8  xl:px-[8%] md:px-[5%] px-5  ">
+    <section className="md:my-[6rem] my-[1rem] w-full gap-8">
       {isFetching && <LoadingOverlay />}
 
-      <div className=" parentline md:pl-[5%] shadow-sm">
-        <h1 className=" text-[#692371] md:text-[45px] text-[25px] font-semibold lg:leading-[70px] md:leading-[60px]">
+      <div className=" parentline md:pl-[1%] shadow-sm">
+        <h1 className=" text-[#692371] md:text-[35px] text-[18px] font-semibold lg:leading-[70px] md:leading-[60px]">
           Blogs
         </h1>
       </div>
@@ -41,8 +41,8 @@ const Blog = () => {
           {blogPosts?.data?.map((post: any, idx: number) => (
             <div
               key={post.news_id}
-              className={`lg:w-[40%] md:-w[300%] min-h-[250px] m-auto w-full shadow-lg ${
-                idx > 2 ? "hidden" : "block"
+              className={`lg:w-[40%] md:-w[300%] min-h-[250px] m-auto w-full border border-neutral-200 rounded-md ${
+                idx > 3 ? "hidden" : "block"
               }`}
             >
               <Link
@@ -54,18 +54,18 @@ const Blog = () => {
                     <img
                       src={post?.photo}
                       alt={post?.name}
-                      className="object-cover md:w-[420px] w-full h-full md:h-[250px]"
+                      className="object-cover  w-full h-full "
                     />
                   ) : (
                     <img
                       src={blogimg}
                       alt="img"
-                      className="md:w-[420px] w-full h-full md:h-[250px] object-cover"
+                      className="w-full h-full object-cover"
                     />
                   )}
                 </div>
                 <div className="mt-[4%] p-3">
-                  <h2 className="text-[#692371] md:text-[30px] text-[20px] font-semibold leading-10 min-h-[75px]">
+                  <h2 className="text-[#692371] md:text-[24px] text-[16px] font-semibold leading-10 min-h-[75px]">
                     {truncateTitle(post.news_title, limit)}
                   </h2>
                   <p className="text-[18px] text-[#692371] mt-2">

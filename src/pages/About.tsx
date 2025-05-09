@@ -16,7 +16,7 @@ const About = () => {
           <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%]  ">
             Who We Are
           </h1>
-          <p className="md:text-[20px] text-[]  leading-[30px] ">
+          <p className="md:text-[19px] text-[]  break-words leading-relaxed ">
             Fortress Capital Limited is one of Nigeria's leading investment
             banking firms committed to providing top-tier financial services
             tailored to clients' unique needs. The company started business
@@ -41,19 +41,16 @@ const About = () => {
       </header>
 
       <section>
-        <div
-          className="w-full  xl:px-[7%] lg:[2%] px-1  mt-[5%] "
-          id="whoweare"
-        >
+        <div className="w-full   mt-[5%] " id="whoweare">
           <VisionMission />
           <div className="w-full   ">
             <div className="border-b border-slate-500 w-full my-14"></div>
 
             <div className=" w-full">
-              <h1 className="md:text-[42px] text-[30px] font-semibold text-[#f49d3f] mb-[1%] ">
+              <h1 className="md:text-[35px] text-[18px] font-semibold text-[#f49d3f] mb-[1%] ">
                 Our Core Values:
               </h1>
-              <p className="md:text-[18px] text-[14px]  leading-[30px] lg:pr-[20%] md:pr-[5%] pr-0 ">
+              <p className="md:text-[18px] text-[14px]  leading-[30px] ">
                 Client-focused | Professionalism | Transparency | Result-driven
                 | Growth
               </p>
@@ -64,22 +61,22 @@ const About = () => {
         <section>
           <TestimonialPage />
         </section>
-        <section className="my-[10%] md:px-[7%] px-1 " id="meettheteam">
-          <h1 className="md:text-[42px] text-[30px] font-semibold text-[#f49d3f] my-6">
+        <section className="my-[10%]" id="meettheteam">
+          <h1 className="md:text-[35px] text-[18px] font-semibold text-[#f49d3f] my-6">
             Board of Directors
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6">
             {boardDirectors?.data?.map((item: string, idx: number) => (
               <CardComp key={idx} item={item} />
             ))}
           </div>
         </section>
 
-        <section className="my-[10%] md:px-[7%] px-1 " id="meettheteam">
-          <h1 className="md:text-[42px] text-[30px] font-semibold text-[#f49d3f] my-6">
+        <section className="1 " id="meettheteam">
+          <h1 className="md:text-[35px] text-[18px] font-semibold text-[#f49d3f] my-6">
             Management Team
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {teamMembers?.data?.map((item: string, idx: number) => (
               <CardComp key={idx} item={item} />
             ))}

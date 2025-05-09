@@ -5,7 +5,7 @@ import invest from "../assets/images/invest.webp";
 const Banner = () => {
   return (
     <section className=" w-full md:flex justify-center  mt-[1rem] ">
-      <div className="mt-[8%]  md:shadow-2xl  rounded-2xl overflow-hidden  md:flex block lg:w-[900px] md:min-w-[500px] ">
+      <div className="mt-[8%]  border border-neutral-200 rounded-2xl overflow-hidden  md:flex block lg:w-[900px] md:min-w-[500px] ">
         <div className=" relative bg4  flex  items-center justify-center md:w-[50%] w-full md:h-[600px] h-[400px]  ">
           <div className="p-[3%] bg-gradient-image  overflow-hidden px-[20%]">
             <div className="relative z-10 ">
@@ -31,7 +31,7 @@ const Banner = () => {
 
             <div className="md:w-[250px] w-[350px]">
               <h1 className="text-[20px] font-bold mb-1">Create an Account</h1>
-              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light ">
+              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium ">
                 click on the form and fill your details.
               </p>
             </div>
@@ -44,7 +44,7 @@ const Banner = () => {
             />
             <div className="md:w-[250px] w-[350px]">
               <h1 className="text-[20px] font-bold mb-1">Upload</h1>
-              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
                 upload your materials
               </p>
             </div>
@@ -58,13 +58,13 @@ const Banner = () => {
 
             <div className="md:w-[250px] w-[350px]">
               <h1 className="text-[20px] font-bold mb-1">Make Profit</h1>
-              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+              <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
                 fill in the mandate form to invest
               </p>
             </div>
           </div>
           <div className="flex gap-4">
-            <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+            <p className="lg:px-[13%] md:px-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
               Voila! You are done. Login to your portal to see your portfolio
             </p>
           </div>
@@ -106,7 +106,7 @@ export default Banner;
 
 //         <div className="md:w-[250px] w-[350px]">
 //           <h1 className="text-[20px] font-bold mb-1">Create an Account</h1>
-//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
 //             Sign up for your account with your personal details
 //           </p>
 //         </div>
@@ -119,7 +119,7 @@ export default Banner;
 //         />
 //         <div className="md:w-[250px] w-[350px]">
 //           <h1 className="text-[20px] font-bold mb-1">Invest</h1>
-//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
 //             Set up your first investment plan via bank transfer (USSD and
 //             Internet Banking)
 //           </p>
@@ -134,7 +134,7 @@ export default Banner;
 
 //         <div className="md:w-[250px] w-[350px]">
 //           <h1 className="text-[20px] font-bold mb-1">Make Profit</h1>
-//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] font-light">
+//           <p className="lg:pr-[13%] md:pr-[8%] pr-0 text-[16px] text-[#00000e] font-medium">
 //             Get your money working for you and earn great returns
 //           </p>
 //         </div>

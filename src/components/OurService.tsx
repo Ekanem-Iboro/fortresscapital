@@ -26,20 +26,21 @@ const OurService = () => {
   ];
 
   return (
-    <section className="w-full px-4 md:px-1 lg:px-12 xl:px-16  mt-[1rem]  bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full p-4 md:p-8  mt-[5rem]  bg-gradient-to-b from-white to-slate-50">
+      <div className="  mx-auto">
         <div className="mb-12 md:mb-16">
-          <h1 className="text-[#692371] text-3xl md:text-4xl lg:text-5xl font-semibold text-center">
-            Our Services
-          </h1>
-          <div className="w-24 h-1 bg-[#F49D3F] mx-auto mt-4 rounded-full" />
+          <div className=" parentline md:pl-[1%] shadow-sm">
+            <h1 className=" text-[#692371] md:text-[35px] text-[18px] font-semibold lg:leading-[70px] md:leading-[60px]">
+              Our Services
+            </h1>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group bg-white shadow-lg hover:shadow-2xl rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105"
+              className="group bg-white border border-neutral-100 hover:shadow-sm rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105"
             >
               <div className="relative">
                 <img

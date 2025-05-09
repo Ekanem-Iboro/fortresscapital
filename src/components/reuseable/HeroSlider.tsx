@@ -86,9 +86,9 @@ function Slider() {
             <CarouselItem key={index} className="w-full">
               <div className="w-full grid md:grid-cols-2 grid-cols-1 gap-8 items-center">
                 <div className="md:order-1 order-2 px-4 lg:px-10 text-center md:text-left">
-                  <h1 className="text-[25px] md:text-[2.2rem] lg:text-[3.6rem]  font-semibold leading-tight">
+                  <h1 className="text-[24px] md:text-[2.2rem] lg:text-[3.1rem]  font-semibold leading-tight">
                     {slide.title[0]}
-                    <span className="text-[#F49D3F] block text-[25px] md:text-[2.1rem] leading-10  lg:text-[3.2rem] lg:leading-[60px] ">
+                    <span className="text-[#F49D3F] block text-[24px] md:text-[2.1rem] leading-10  lg:text-[2.8rem] lg:leading-[60px] ">
                       {slide.title[1]}
                     </span>
                   </h1>

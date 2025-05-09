@@ -75,9 +75,8 @@ const serviceContent: any = {
         </div>
 
         <div className="mb-4">
-          Our approach to asset management is centred on delivering{" "}
-          <strong>consistent, long-term value, </strong> ensuring your capital
-          works efficiently for you.
+          Our approach to asset management is centred on delivering consistent,
+          long-term value, ensuring your capital works efficiently for you.
         </div>
       </div>
     ),
@@ -260,7 +259,7 @@ function ServicesContent() {
                 />
               </div>
 
-              <p className="text-lg md:text-xl text-gray-700 mb-8">
+              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
                 {selectedService.description}
               </p>
 
@@ -316,7 +315,7 @@ function ServicesContent() {
             Please select a service to view details
           </div>
         )}
-        <div className="md:px-[15rem] px-2">
+        <div className="md:px-[13rem] px-2">
           <div className="bg-gray-50 p-4 md:p-6 rounded-xl">
             <h3 className="text-lg md:text-xl text-gray-700 p-8">
               At <strong> Fortress Capital Limited, </strong> we pride ourselves

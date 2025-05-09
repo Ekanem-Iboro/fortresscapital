@@ -22,13 +22,13 @@ export function CardComp({ item }: any) {
             onClick={() => setTeamMembers(item)}
           >
             <div className="flex flex-col justify-center items-center">
-              <div className=" flex border-b border-slate-300  p-4 overflow-hidden  w-full justify-center items-center h-[300px]">
-                <div className="relative w-[250px] h-[250px] overflow-hidden rounded-full border-2 border-slate-300">
+              <div className=" flex border-b border-slate-300  p-4 overflow-hidden  w-full justify-center items-center h-[200px]">
+                <div className="flex justify-center items-center w-[180px] h-[180px] overflow-hidden rounded-full border-2 border-slate-300">
                   {item?.photo !== "" ? (
                     <img
                       src={item?.photo}
                       alt={item?.name}
-                      className="object-cover  mx-auto"
+                      className="object-cover mx-auto"
                     />
                   ) : (
                     <User2Icon size={250} className="object-cover" />
@@ -38,7 +38,7 @@ export function CardComp({ item }: any) {
               {/* <div className="border-b border-slate-300  p-4 overflow-hidden shadow-xl">
                 <User2Icon size={250} className="object-cover" />
               </div> */}
-              <div className="h-[200px] flex flex-col items-center justify-center pb-6 px-4">
+              <div className="h-[150px] flex flex-col items-center justify-center pb-6 px-4">
                 <p className="mt-1   text-[18px] text-[#f49d3f] text-center capitalize">
                   {item?.name}
                 </p>
