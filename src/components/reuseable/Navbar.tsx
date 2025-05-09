@@ -231,7 +231,7 @@ const Navbar = () => {
                 </button>
                 <button
                   onClick={() => {
-                    navigate("createaccount");
+                    navigate("/createaccount");
                     toggleMobileMenu();
                   }}
                   className="w-full py-3 bg-[#F49D3F] text-white rounded-xl"
