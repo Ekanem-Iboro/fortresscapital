@@ -2,19 +2,20 @@
 
 import {
   ChevronLeft,
-  Facebook,
-  Instagram,
-  Linkedin,
   Share,
-  Twitter,
   User2Icon,
+  FacebookIcon,
+  InstagramIcon,
+  LinkedinIcon,
+  TwitterIcon,
 } from "lucide-react";
 import Footer from "../components/Footer";
-// import { blogData } from "../page";
 import { useEducationStore } from "../store/userStore";
 import { useNavigate } from "react-router-dom";
 import blogimg from "../assets/images/img3.jpg";
 import DOMPurify from "dompurify";
+import LazyImage from "../components/reuseable/LazyImage";
+import { optimizeImageUrl, getResponsiveWidth } from "../utils/imageOptimizer";
 
 const BlogDetails = () => {
   const navigate = useNavigate();
@@ -24,17 +25,17 @@ const BlogDetails = () => {
 
   return (
     <div className="w-full">
-      <header className="md:h-[500px] h-[350px] w-full  flex items-center justify-center">
+      <header className="md:h-[500px] h-[350px] w-full flex items-center justify-center">
         {education?.photo ? (
-          <img
-            src={education?.photo || ""}
-            alt=""
+          <LazyImage
+            src={optimizeImageUrl(education?.photo || "", getResponsiveWidth())}
+            alt="Blog post header image"
             className="md:h-[500px] h-full w-full object-cover"
           />
         ) : (
-          <img
-            src={blogimg || ""}
-            alt=""
+          <LazyImage
+            src={blogimg}
+            alt="Default blog header image"
             className="md:h-[500px] h-full w-full object-cover"
           />
         )}
@@ -58,17 +59,20 @@ const BlogDetails = () => {
           dangerouslySetInnerHTML={{ __html: sanitizedContent || "" }}
         />
 
-        <div className=" mr-[10px]">
+        <div className="mr-[10px]">
           {education?.photo ? (
-            <img
-              src={education?.photo || ""}
-              alt=""
-              className="md:w-[620px] w-full md:h-[500px]  h-full"
+            <LazyImage
+              src={optimizeImageUrl(
+                education?.photo || "",
+                getResponsiveWidth()
+              )}
+              alt="Blog post content image"
+              className="md:w-[620px] w-full md:h-[500px] h-full"
             />
           ) : (
-            <img
-              src={blogimg || ""}
-              alt=""
+            <LazyImage
+              src={blogimg}
+              alt="Default blog content image"
               className="md:h-[500px] h-full w-full object-cover"
             />
           )}
@@ -80,25 +84,25 @@ const BlogDetails = () => {
         <div className="md:flex  items-center justify-between w-full block md:ml-0 ml-[70%] ">
           <div className="flex items-center gap-6 transition-all duration-500 delay-500 ease-in md:mb-0 mb-6">
             <a href="">
-              <Instagram
+              <InstagramIcon
                 className="text-slate-500 hover:text-[#f49d3f]"
                 size={30}
               />
             </a>
             <a href="">
-              <Twitter
-                className="text-slate-500   hover:text-[#f49d3f]"
-                size={30}
-              />
-            </a>
-            <a href="">
-              <Linkedin
+              <TwitterIcon
                 className="text-slate-500 hover:text-[#f49d3f]"
                 size={30}
               />
             </a>
             <a href="">
-              <Facebook
+              <LinkedinIcon
+                className="text-slate-500 hover:text-[#f49d3f]"
+                size={30}
+              />
+            </a>
+            <a href="">
+              <FacebookIcon
                 className="text-slate-500 hover:text-[#f49d3f]"
                 size={30}
               />
@@ -113,10 +117,10 @@ const BlogDetails = () => {
         <div className="flex flex-col justify-center items-center">
           <div className="border border-slate-300 rounded-full p-4 overflow-hidden shadow-xl">
             {education?.photo ? (
-              <img
-                src={education?.photo || ""}
-                alt=""
-                className="md:w-[620px] w-full md:h-[500px]  h-full"
+              <LazyImage
+                src={optimizeImageUrl(education?.photo || "", 200)} // Smaller size for avatar
+                alt="Author avatar"
+                className="md:w-[620px] w-full md:h-[500px] h-full"
               />
             ) : (
               <User2Icon size={100} className="object-cover" />

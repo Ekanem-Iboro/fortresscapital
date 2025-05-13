@@ -6,6 +6,7 @@ import X from "../assets/images/x.png";
 import linkedin from "../assets/images/linkedin.png";
 import facebook from "../assets/images/facebook.png";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -34,74 +35,78 @@ const Footer = () => {
             <p className=" font-medium mb-5 ">info@fortresscapitalng.com</p>
           </div>
           <div className="flex gap-7 mt-4">
-            <motion.a
-              href="https://www.instagram.com/fortresscapitalltd/?igsh=d2dvdzN0cGNkZmJo"
+            <motion.div
               whileHover={{ scale: 1.2, rotateY: 15, z: 20 }}
               whileTap={{ scale: 0.9 }}
               initial={{ rotateY: 0 }}
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <motion.img
-                src={instagram}
-                alt="Instagram"
-                className="w-[40px] drop-shadow-lg"
-                style={{
-                  filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
-                }}
-              />
-            </motion.a>
-            <motion.a
-              href="https://x.com/fortresscapltd?s=21"
+              <Link to="https://www.instagram.com/fortresscapitalltd/?igsh=d2dvdzN0cGNkZmJo">
+                <motion.img
+                  src={instagram}
+                  alt="Instagram"
+                  className="w-[40px] drop-shadow-lg"
+                  style={{
+                    filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
+                  }}
+                />
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.2, rotateY: 15, z: 20 }}
               whileTap={{ scale: 0.9 }}
               initial={{ rotateY: 0 }}
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <motion.img
-                src={X}
-                alt="X"
-                className="w-[40px] drop-shadow-lg"
-                style={{
-                  filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
-                }}
-              />
-            </motion.a>
-            <motion.a
-              href="https://www.linkedin.com/company/fortress-capital-limited"
+              <Link to="https://x.com/fortresscapltd?s=21">
+                <motion.img
+                  src={X}
+                  alt="X"
+                  className="w-[40px] drop-shadow-lg"
+                  style={{
+                    filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
+                  }}
+                />
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.2, rotateY: 15, z: 20 }}
               whileTap={{ scale: 0.9 }}
               initial={{ rotateY: 0 }}
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <motion.img
-                src={linkedin}
-                alt="LinkedIn"
-                className="w-[40px] drop-shadow-lg"
-                style={{
-                  filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
-                }}
-              />
-            </motion.a>
-            <motion.a
-              href="https://www.facebook.com/FortressCapital"
+              <Link to="https://www.linkedin.com/company/fortress-capital-limited">
+                <motion.img
+                  src={linkedin}
+                  alt="LinkedIn"
+                  className="w-[40px] drop-shadow-lg"
+                  style={{
+                    filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
+                  }}
+                />
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.2, rotateY: 15, z: 20 }}
               whileTap={{ scale: 0.9 }}
               initial={{ rotateY: 0 }}
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <motion.img
-                src={facebook}
-                alt="facebook"
-                className="w-[40px] drop-shadow-lg"
-                style={{
-                  filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
-                }}
-              />
-            </motion.a>
+              <Link to="https://www.facebook.com/FortressCapital">
+                <motion.img
+                  src={facebook}
+                  alt="facebook"
+                  className="w-[40px] drop-shadow-lg"
+                  style={{
+                    filter: "drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3))",
+                  }}
+                />
+              </Link>
+            </motion.div>
           </div>
         </div>
         <div className="md:mb-0 mb-[5%] max-w-sm ">
@@ -109,7 +114,7 @@ const Footer = () => {
           <ul>
             {footerData.links.map((link, index) => (
               <li key={index} className="mb-4 underline font-medium">
-                <a href={link.href}>{link.name}</a>
+                <Link to={link.href}>{link.name}</Link>
               </li>
             ))}
           </ul>
@@ -119,7 +124,7 @@ const Footer = () => {
           <ul>
             {footerData.services.map((service, index) => (
               <li key={index} className="mb-4 underline  font-medium">
-                <a href={service.href}>{service.name}</a>
+                <Link to={service.href}>{service.name}</Link>
               </li>
             ))}
           </ul>

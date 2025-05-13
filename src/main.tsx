@@ -9,7 +9,17 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import App from "./App.tsx";
 
-const queryClient = new QueryClient();
+// Configure QueryClient with better defaults for production
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 2,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    },
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -19,7 +29,7 @@ createRoot(document.getElementById("root")!).render(
         <App />
         <ToastContainer />
       </BrowserRouter>
-      <ReactQueryDevtools />
+      {import.meta.env.DEV && <ReactQueryDevtools />}
     </QueryClientProvider>
   </StrictMode>
 );

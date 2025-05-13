@@ -8,6 +8,8 @@ import abouthero from "../assets/images/whoweare.jpg";
 import { useGetArticles } from "../api/get/getData";
 import blogimg from "../assets/images/img3.jpg";
 import LoadingOverlay from "../components/OverlayLoader";
+import LazyImage from "../components/reuseable/LazyImage";
+import { optimizeImageUrl, getResponsiveWidth } from "../utils/imageOptimizer";
 
 const Blog = () => {
   const [limit] = useState<number>(4);
@@ -46,12 +48,12 @@ const Blog = () => {
   return (
     <div className="w-full">
       {isFetching && <LoadingOverlay />}
-      <header className=" w-full ">
+      <header className="w-full">
         <div>
-          <img
+          <LazyImage
             src={abouthero}
-            alt=""
-            className="md:h-[600px] w-full h-full object-cover "
+            alt="About Hero"
+            className="md:h-[600px] w-full h-full object-cover"
           />
         </div>
       </header>
@@ -67,15 +69,15 @@ const Blog = () => {
           >
             <div className="">
               {item?.photo !== "" ? (
-                <img
-                  src={item?.photo}
-                  alt={item?.name}
+                <LazyImage
+                  src={optimizeImageUrl(item?.photo, getResponsiveWidth())}
+                  alt={item?.name || "Blog post image"}
                   className="object-cover md:w-[420px] w-full h-full md:h-[250px]"
                 />
               ) : (
-                <img
+                <LazyImage
                   src={blogimg}
-                  alt=""
+                  alt="Default blog image"
                   className="md:w-[420px] w-full h-full md:h-[250px] object-cover"
                 />
               )}
