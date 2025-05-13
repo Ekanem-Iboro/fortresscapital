@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import securities from "../assets/images/img1.jpg";
 import management from "../assets/images/managment.jpg";
 import Advisory from "../assets/images/services.jpg";
+import LazyImage from "./reuseable/LazyImage";
 
 const OurService = () => {
   const services = [
@@ -43,7 +44,7 @@ const OurService = () => {
               className="group bg-white border border-neutral-100 hover:shadow-sm rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105"
             >
               <div className="relative">
-                <img
+                <LazyImage
                   src={service.image}
                   alt={service.title}
                   className="w-full h-56 md:h-64 object-cover rounded-2xl transform transition-transform duration-300 group-hover:scale-95"
