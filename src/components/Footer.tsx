@@ -2,7 +2,7 @@ import Newsletter from "./Newsletter";
 import { LocateFixedIcon, Mail, Phone } from "lucide-react";
 import logo from "../assets/images/logo.png";
 import instagram from "../assets/images/instagram.png";
-import X from "../assets/images/x.png";
+import xlink from "../assets/images/xlink.png";
 import linkedin from "../assets/images/linkedin.png";
 import facebook from "../assets/images/facebook.png";
 import { motion } from "framer-motion";
@@ -28,7 +28,9 @@ const Footer = () => {
           </div>
           <div className="flex gap-3">
             <Phone color="#692371" size={20} />
-            <p className=" font-medium mb-5 ">+234 8099981121</p>
+            <p className=" font-medium mb-5 ">
+              <Link to="tel:+2348099981121">+234-8099981121</Link>
+            </p>
           </div>
           <div className="flex gap-3">
             <Mail color="#692371" size={20} className="mr-1" />
@@ -42,7 +44,11 @@ const Footer = () => {
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <Link to="https://www.instagram.com/fortresscapitalltd/?igsh=d2dvdzN0cGNkZmJo">
+              <Link
+                to="https://www.instagram.com/fortresscapitalltd/?igsh=d2dvdzN0cGNkZmJo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <motion.img
                   src={instagram}
                   alt="Instagram"
@@ -60,9 +66,13 @@ const Footer = () => {
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <Link to="https://x.com/fortresscapltd?s=21">
+              <Link
+                to="https://x.com/fortresscapltd?s=21"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <motion.img
-                  src={X}
+                  src={xlink}
                   alt="X"
                   className="w-[40px] drop-shadow-lg"
                   style={{
@@ -78,7 +88,11 @@ const Footer = () => {
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <Link to="https://www.linkedin.com/company/fortress-capital-limited">
+              <Link
+                to="https://www.linkedin.com/company/fortress-capital-limited"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <motion.img
                   src={linkedin}
                   alt="LinkedIn"
@@ -96,7 +110,11 @@ const Footer = () => {
               transition={{ type: "spring", stiffness: 300 }}
               style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             >
-              <Link to="https://www.facebook.com/FortressCapital">
+              <Link
+                to="https://www.facebook.com/FortressCapital"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <motion.img
                   src={facebook}
                   alt="facebook"

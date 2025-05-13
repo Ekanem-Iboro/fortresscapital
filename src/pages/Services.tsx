@@ -315,9 +315,9 @@ function ServicesContent() {
             Please select a service to view details
           </div>
         )}
-        <div className="md:px-[13rem] px-2">
-          <div className="bg-gray-50 p-4 md:p-6 rounded-xl">
-            <h3 className="text-lg md:text-xl text-gray-700 p-8">
+        <div className="md:px-[13rem]">
+          <div className="bg-gray-50 p-1 md:p-6 rounded-xl">
+            <h3 className="text-lg md:text-xl text-gray-700 p-1">
               At <strong> Fortress Capital Limited, </strong> we pride ourselves
               on delivering superior service and building lasting relationships
               with our clients. Our young and dynamic management team is
