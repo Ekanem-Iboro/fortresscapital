@@ -25,13 +25,13 @@ export const createIndividualAccountSchema = z.object({
       .min(1, REQUIRED_ERROR)
       .regex(/^[a-zA-Z\s]*$/, "Surname should only contain letters"),
     maiden: z.string().optional(),
-    othernames: z.string().optional(),
-    title: z.string().min(1, REQUIRED_ERROR),
-    date: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
+    othernames: z.string().min(1, REQUIRED_ERROR),
+    title: z.string().optional(),
+    date: z.string().regex(dateRegex),
     gender: z.string().min(1, REQUIRED_ERROR),
     accounttype: z.string().min(1, REQUIRED_ERROR),
-    maritalstatus: z.string().min(1, REQUIRED_ERROR),
-    nationality: z.string().min(1, REQUIRED_ERROR),
+    maritalstatus: z.string().optional(),
+    nationality: z.string().optional(),
     dateofbirth: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
   }),
 
@@ -40,14 +40,11 @@ export const createIndividualAccountSchema = z.object({
       .string()
       .min(1, REQUIRED_ERROR)
       .min(10, "Address should be at least 10 characters long"),
-    permanentaddress: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(10, "Address should be at least 10 characters long"),
-    mailingaddress: z.string().min(1, REQUIRED_ERROR),
-    localgovtarea: z.string().min(1, REQUIRED_ERROR),
+    permanentaddress: z.string().optional(),
+    mailingaddress: z.string().optional(),
+    localgovtarea: z.string().optional(),
     occupation: z.string().min(1, REQUIRED_ERROR),
-    employernameaddress: z.string().min(1, REQUIRED_ERROR),
+    employernameaddress: z.string().optional(),
     business: z.string().optional(),
     email: z.string().min(1, REQUIRED_ERROR).email(EMAIL_ERROR),
     phone: z
@@ -79,11 +76,8 @@ export const createIndividualAccountSchema = z.object({
       .string()
       .min(1, REQUIRED_ERROR)
       .min(3, "Next of kin name must be at least 3 characters"),
-    relationshipwithnextofkin: z.string().min(1, REQUIRED_ERROR),
-    kinaddress: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(10, "Address should be at least 10 characters long"),
+    relationshipwithnextofkin: z.string().optional(),
+    kinaddress: z.string().optional(),
     tel: z
       .string()
       .min(7, PHONE_ERROR)
@@ -94,14 +88,12 @@ export const createIndividualAccountSchema = z.object({
     mandate: z.string().optional(),
   }),
   investmentDetails: z.object({
-    investmentamount: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .regex(/^\d+$/, "Investment amount must be a number")
-      .refine(
-        (val) => parseInt(val) >= 1000,
-        "Investment amount must be at least 1000"
-      ),
+    investmentamount: z.string().optional(),
+    // .regex(/^\d+$/, "Investment amount must be a number")
+    // .refine(
+    //   (val) => parseInt(val) >= 1000,
+    //   "Investment amount must be at least 1000"
+    // ),
   }),
 
   serviceRequired: z
@@ -127,47 +119,36 @@ export const createIndividualAccountSchema = z.object({
 //
 
 export const createCorporateAccountSchema = z.object({
-  personalDetails: z.object({
-    passportimg: z.any().optional(),
-    firstname: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .regex(/^[a-zA-Z\s]*$/, "First should only contain letters"),
-    surname: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .regex(/^[a-zA-Z\s]*$/, "Surname should only contain letters"),
-    maiden: z.string().optional(),
-    othernames: z.string().optional(),
-    title: z.string().min(1, REQUIRED_ERROR),
-    date: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
-    gender: z.string().min(1, REQUIRED_ERROR),
+  businessDetails: z.object({
     accounttype: z.string().min(1, REQUIRED_ERROR),
-    maritalstatus: z.string().min(1, REQUIRED_ERROR),
-    nationality: z.string().min(1, REQUIRED_ERROR),
-    dateofbirth: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
+    rcorbn: z.string().min(1, REQUIRED_ERROR),
+    dateofincorporation: z
+      .string()
+      .min(1, REQUIRED_ERROR)
+      .regex(dateRegex, DATE_ERROR),
+    businessaddress: z
+      .string()
+      .min(1, REQUIRED_ERROR)
+      .min(10, "Address should be at least 10 characters long"),
+    branchofficeaddress: z.string().min(1, REQUIRED_ERROR),
   }),
 
   contactDetails: z.object({
-    contactaddress: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(10, "Address should be at least 10 characters long"),
-    permanentaddress: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(10, "Address should be at least 10 characters long"),
-    mailingaddress: z.string().min(1, REQUIRED_ERROR),
-    localgovtarea: z.string().min(1, REQUIRED_ERROR),
-    occupation: z.string().min(1, REQUIRED_ERROR),
-    employernameaddress: z.string().min(1, REQUIRED_ERROR),
-    business: z.string().optional(),
-    email: z.string().min(1, REQUIRED_ERROR).email(EMAIL_ERROR),
-    phone: z
-      .string()
-      .min(7, PHONE_ERROR)
-      .max(15, PHONE_ERROR)
-      .regex(/^\d+$/, NUMBER_ERROR),
+    nameofdirector_a: z.string().optional(),
+    director_a_bvn: z.string().optional(),
+    director_a_phone: z.string().optional(),
+
+    nameofdirector_b: z.string().optional(),
+    director_b_bvn: z.string().optional(),
+    director_b_phone: z.string().optional(),
+
+    nameofdirector_c: z.string().optional(),
+    director_c_bvn: z.string().optional(),
+    director_c_phone: z.string().optional(),
+
+    nameofdirector_d: z.string().optional(),
+    director_d_bvn: z.string().optional(),
+    director_d_phone: z.string().optional(),
   }),
 
   bankAccountDetails: z.object({
@@ -187,62 +168,22 @@ export const createCorporateAccountSchema = z.object({
     dateopened: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
   }),
 
-  otherInformation: z.object({
-    kinname: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(3, "Next of kin name must be at least 3 characters"),
-    relationshipwithnextofkin: z.string().min(1, REQUIRED_ERROR),
-    kinaddress: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .min(10, "Address should be at least 10 characters long"),
-    tel: z
-      .string()
-      .min(7, PHONE_ERROR)
-      .max(15, PHONE_ERROR)
-      .regex(/^\d+$/, NUMBER_ERROR),
-    signature: z.any(),
-    documents: z.any(),
-    mandate: z.string().optional(),
-  }),
   investmentDetails: z.object({
-    investmentamount: z
-      .string()
-      .min(1, REQUIRED_ERROR)
-      .regex(/^\d+$/, "Investment amount must be a number")
-      .refine(
-        (val) => parseInt(val) >= 1000,
-        "Investment amount must be at least 1000"
-      ),
+    investmentamount: z.string().optional(),
   }),
 
-  serviceRequired: z
-    .object({
-      equitytrading: z.string().optional(),
-      portfoliomanagement: z.string().optional(),
-      investmentadvisory: z.string().optional(),
-      fixedincome: z.string().optional(),
-    })
-    .optional(),
-  // serviceRequired: z
-  //   .object({
-  //     equitytrading: z.boolean().optional(),
-  //     portfoliomanagement: z.boolean().optional(),
-  //     investmentadvisory: z.boolean().optional(),
-  //     fixedincome: z.boolean().optional(),
-  //   })
-  //   .optional(),
+  serviceRequired: z.object({
+    equitytrading: z.string().optional(),
+    portfoliomanagement: z.string().optional(),
+    investmentadvisory: z.string().optional(),
+    fixedincome: z.string().optional(),
+  }),
+
   politicallyExposed: z.object({
     ifExposed: z.string().min(1, REQUIRED_ERROR),
     ifyesdetails: z.string().optional(),
-    // .refine((val) => {
-    //   if (val === undefined) return true;
-    //   return val.trim().length > 0;
-    // }, "Details are required if you selected Yes"),
-    // uploadpepsignature: z.any(),
-    // pepdate: z.string().min(1, REQUIRED_ERROR).regex(dateRegex, DATE_ERROR),
   }),
+
   corporateAccount: z
     .array(
       z.object({
@@ -255,6 +196,5 @@ export const createCorporateAccountSchema = z.object({
         category: z.string().min(1, REQUIRED_ERROR),
       })
     )
-    .min(1, "At least one signatory is required")
-    .optional(),
+    .min(1, "At least one signatory is required"),
 });

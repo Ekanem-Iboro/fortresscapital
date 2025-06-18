@@ -9,7 +9,7 @@ type SelectFieldProps = {
   error?: FieldError | undefined; // Error object from React Hook Form
   register: UseFormRegister<any>; // The register function from React Hook Form
   [key: string]: any; // Allow additional props
-  isRequired?: boolean; //
+  required?: boolean; //
 };
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -18,19 +18,24 @@ const SelectField: React.FC<SelectFieldProps> = ({
   options,
   error,
   register,
+  required = false, // Default to false if not provided
   ...props
 }) => {
   return (
     <div className="w-full">
       {/* Label */}
       <div className="flex items-center gap-8  w-full">
-        <label htmlFor={name} className="text-[18px] font-[400]">
-          {label}
+        <label
+          htmlFor={name}
+          className="text-[18px] font-[500] mb-2 text-black"
+        >
+          {label} {required && <span className="text-red-500">*</span>}
         </label>
       </div>
 
       {/* Select */}
       <select
+        required={required}
         id={name}
         className={`w-full p-2 border rounded-md focus:outline-none focus:ring-2  focus:ring-[#692371] ${
           error ? "border-red-500" : "border-gray-300"
@@ -39,7 +44,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
         {...props}
         // required={isRequired}
       >
-        <option value="">Select {label}</option>
+        <option value="" className="text-slate-300">
+          Select {label}
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

@@ -1,65 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { publicApi } from "..";
+import axios from "axios";
 
 const postData = async ({ url, payload }: { url: string; payload: any }) => {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 30 second timeout
 
-    const response = await fetch(`${publicApi}/${url}`, {
-      method: "POST",
+    const config = {
       signal: controller.signal,
       headers:
         payload instanceof FormData
-          ? {}
+          ? { "Content-Type": "multipart/form-data" }
           : {
               "Content-Type": "application/json",
               "Cache-Control": "no-cache",
             },
-      body: payload instanceof FormData ? payload : JSON.stringify(payload),
-    });
+    };
+
+    const response = await axios.post(
+      `${publicApi}/${url}`,
+      payload instanceof FormData ? payload : payload,
+      config
+    );
 
     clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Network error: ${response.status} ${response.statusText} - ${errorText}`
-      );
-    }
-
-    return response.json();
+    return response.data;
   } catch (error) {
-    if (error instanceof Error) {
+    if (axios.isAxiosError(error)) {
       console.error(`API post error for ${url}:`, error.message);
-      throw error;
+      throw new Error(error.response?.data?.message || error.message);
     }
     throw new Error("Unknown error occurred during API post");
   }
 };
 
-const usePostRequest = () => {
-  const queryClient = useQueryClient();
-
+// General post request (for other cases)
+export const usePostRequest = () => {
   return useMutation({
     mutationFn: postData,
-    onSuccess: (data: any, variables) => {
+    onSuccess: (data) => {
       toast.success(data?.message || "Operation completed successfully");
-
-      // Invalidate relevant queries based on the URL pattern
-      const url = variables.url;
-      if (url.includes("testimonials")) {
-        queryClient.invalidateQueries({ queryKey: ["getTestimonials"] });
-      } else if (url.includes("articles") || url.includes("news")) {
-        queryClient.invalidateQueries({ queryKey: ["getArticles"] });
-      } else if (url.includes("team") || url.includes("member")) {
-        queryClient.invalidateQueries({ queryKey: ["getTeamMembers"] });
-        queryClient.invalidateQueries({ queryKey: ["getBoardDirectors"] });
-      } else if (url.includes("report")) {
-        queryClient.invalidateQueries({ queryKey: ["getReports"] });
-      }
     },
     onError: (error: any) => {
       const errorMessage =

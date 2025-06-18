@@ -42,7 +42,7 @@ const TestimonialCarousel = () => {
     if (!isFetching && testimonials?.data?.length > 0) {
       const interval = setInterval(() => {
         handleNextTestimonial();
-      }, 10000);
+      }, 2000);
 
       return () => clearInterval(interval);
     }

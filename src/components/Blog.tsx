@@ -28,57 +28,57 @@ const Blog = () => {
   };
 
   return (
-    <section className="md:my-[6rem] my-[1rem] w-full gap-8">
+    <section className="py-8 sm:py-12 lg:py-16 w-full px-4 sm:px-6 lg:px-8">
       {isFetching && <LoadingOverlay />}
 
-      <div className=" parentline md:pl-[1%] shadow-sm">
-        <h1 className=" text-[#692371] md:text-[35px] text-[18px] font-semibold lg:leading-[70px] md:leading-[60px]">
+      <div className="mt-9">
+        <h1 className="text-[#692371] text-2xl sm:text-3xl lg:text-4xl font-semibold border-b-2 border-[#f49d3f] w-fit">
           Blogs
         </h1>
       </div>
-      <div className="w-full mt-[4%]">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-5">
+
+      <div className="w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {blogPosts?.data?.map((post: any, idx: number) => (
             <div
               key={post.news_id}
-              className={`lg:w-[40%] md:-w[300%] min-h-[250px] m-auto w-full border border-neutral-200 rounded-md ${
+              className={`${
                 idx > 3 ? "hidden" : "block"
-              }`}
+              } bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-neutral-200`}
             >
               <Link
                 to={`blog/${post.news_id}&${post.news_title}`}
                 onClick={() => handleblog(post)}
+                className="block h-full"
               >
-                <div className="">
+                <div className="aspect-video overflow-hidden">
                   {post?.photo !== "" ? (
                     <img
                       src={post?.photo}
                       alt={post?.name}
-                      className="object-cover  w-full h-full "
+                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
                     <img
                       src={blogimg}
                       alt="img"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
                     />
                   )}
                 </div>
-                <div className="mt-[4%] p-3">
-                  <h2 className="text-[#692371] md:text-[24px] text-[16px] font-semibold leading-10 min-h-[75px]">
+                <div className="p-4 sm:p-5">
+                  <h2 className="text-[#692371] text-lg sm:text-xl font-semibold line-clamp-2 mb-2 min-h-[3.5rem]">
                     {truncateTitle(post.news_title, limit)}
                   </h2>
-                  <p className="text-[18px] text-[#692371] mt-2">
+                  <p className="text-[#692371] text-sm sm:text-base font-medium">
                     {post.publisher}
                   </p>
-                  <div className="flex items-center justify-between gap-2 mt-[2%]">
-                    <p className="text-[14px] text-[#692371]">
-                      {post.news_date}
-                    </p>
+                  <div className="flex items-center justify-between mt-4">
+                    <p className="text-sm text-[#692371]">{post.news_date}</p>
                     <ChevronRight
-                      size={30}
+                      size={24}
                       color="#692371"
-                      className="cursor-pointer"
+                      className="transition-transform group-hover:translate-x-1"
                     />
                   </div>
                 </div>
@@ -86,12 +86,13 @@ const Blog = () => {
             </div>
           ))}
         </div>
-        <div className="w full my-[3rem] md:flex items-center justify-center">
+
+        <div className="mt-12 flex justify-center">
           <Link
-            to={"/blog"}
-            className="md:w-[30%] w-full text-white bg-[#692371] rounded-lg p-2 text-center"
+            to="/blog"
+            className="inline-block w-full sm:w-auto px-8 py-3 bg-[#692371] text-white rounded-lg hover:bg-[#4e1854] transition-colors duration-300 text-center"
           >
-            <button className="w-full ">See more</button>
+            See more
           </Link>
         </div>
       </div>

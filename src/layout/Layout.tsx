@@ -1,16 +1,16 @@
 // components/Layout.tsx
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/reuseable/Navbar";
-import SmoothStockTicker from "../components/StockAnalizer";
+// import SmoothStockTicker from "../components/StockAnalizer";
 
 const Layout = () => {
   return (
     <>
       <Navbar />
-      <div className=" lg:pt-[75px] pt-[65px] fixed z-40">
+      {/* <div className=" lg:pt-[75px] pt-[65px] fixed z-40">
         <SmoothStockTicker />
-      </div>
-      <main className="lg:pt-[200px] md:pt-[170px] pt-[140px] xl:px-[14%] lg:px-{5%} md:px-[3%] px-[10px] bg-white w-full">
+      </div> */}
+      <main className="lg:pt-[110px]  xl:px-[14%] lg:px-{5%} md:px-[3%] px-[10px] bg-white w-full">
         <Outlet /> {/* This will render the current route's component */}
       </main>
     </>

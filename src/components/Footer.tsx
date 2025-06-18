@@ -10,33 +10,48 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div>
-      <div className="border-t border-t-slate-200 mt-[5%] py-[3rem] sm:px-4 flex md:flex-row flex-col justify-between w-full h-auto font-medium">
-        <div className="md:mb-0 mb-[5%]  max-w-sm ">
-          <h1 className="mb-3 font-bold text-[23px]">Contact us</h1>
-          <img src={logo} alt="logo" className="w-[150px] mt-5" />
-          <p className=" font-medium mb-5 mt-3 leading-relaxed">
+    <div className="w-full">
+      <div className="border-t border-t-slate-200 mt-[5%] py-8 px-4 md:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+        {/* Contact Section */}
+        <div className="space-y-4 max-w-full lg:max-w-sm">
+          <h1 className="text-xl md:text-2xl font-bold">Contact us</h1>
+          <img src={logo} alt="logo" className="w-32 md:w-[150px]" />
+          <p className="text-sm md:text-base font-medium leading-relaxed">
             <strong>Fortress Capital Limited</strong> is one of Nigeria's
             leading investment banking firms committed to providing top-tier
             financial services tailored to clients' unique needs.
           </p>
-          <div className="flex gap-3 ">
-            <LocateFixedIcon color="#692371" size={25} />
-            <p className=" font-medium mb-5 ">
-              4th Floor ED Building, 47, Marina, Lagos.
-            </p>
+
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <LocateFixedIcon
+                color="#692371"
+                className="w-5 h-5 md:w-6 md:h-6 mt-1"
+              />
+              <p className="text-sm md:text-base font-medium">
+                4th Floor ED Building, 47, Marina, Lagos.
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone color="#692371" className="w-5 h-5" />
+              <Link
+                to="tel:+2348099981121"
+                className="text-sm md:text-base font-medium hover:text-purple-700"
+              >
+                +234-8099981121
+              </Link>
+            </div>
+            <div className="flex items-center gap-3">
+              <Mail color="#692371" className="w-5 h-5" />
+              <p className="text-sm md:text-base font-medium">
+                info@fortresscapitalng.com
+              </p>
+            </div>
           </div>
-          <div className="flex gap-3">
-            <Phone color="#692371" size={20} />
-            <p className=" font-medium mb-5 ">
-              <Link to="tel:+2348099981121">+234-8099981121</Link>
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <Mail color="#692371" size={20} className="mr-1" />
-            <p className=" font-medium mb-5 ">info@fortresscapitalng.com</p>
-          </div>
-          <div className="flex gap-7 mt-4">
+
+          {/* Social Icons */}
+          <div className="flex flex-wrap gap-4 md:gap-7 mt-6">
             <motion.div
               whileHover={{ scale: 1.2, rotateY: 15, z: 20 }}
               whileTap={{ scale: 0.9 }}
@@ -127,37 +142,57 @@ const Footer = () => {
             </motion.div>
           </div>
         </div>
-        <div className="md:mb-0 mb-[5%] max-w-sm ">
-          <h1 className="mb-3 font-bold text-[23px]">Links</h1>
-          <ul>
+
+        {/* Links Section */}
+        <div className="space-y-4 md:ml-14">
+          <h1 className="text-xl md:text-2xl font-bold">Links</h1>
+          <ul className="space-y-3">
             {footerData.links.map((link, index) => (
-              <li key={index} className="mb-4 underline font-medium">
-                <Link to={link.href}>{link.name}</Link>
+              <li key={index}>
+                <Link
+                  to={link.href}
+                  className="text-sm md:text-base font-medium hover:text-purple-700 underline"
+                >
+                  {link.name}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
-        <div className="md:mb-0 mb-[5%] max-w-sm ">
-          <h1 className="mb-3 font-bold text-[23px]">Our services</h1>
-          <ul>
+
+        {/* Services Section */}
+        <div className="space-y-4">
+          <h1 className="text-xl md:text-2xl font-bold">Our services</h1>
+          <ul className="space-y-3">
             {footerData.services.map((service, index) => (
-              <li key={index} className="mb-4 underline  font-medium">
-                <Link to={service.href}>{service.name}</Link>
+              <li key={index}>
+                <Link
+                  to={service.href}
+                  className="text-sm md:text-base font-medium hover:text-purple-700 underline"
+                >
+                  {service.name}
+                </Link>
               </li>
             ))}
           </ul>
         </div>
-        <div className="md:mb-0 mb-[5%] max-w-sm ">
-          <h1 className="mb-3 font-bold text-[23px]">Newsletter</h1>
-          <p className=" font-medium mb-5 ">
+
+        {/* Newsletter Section */}
+        <div className="space-y-4">
+          <h1 className="text-xl md:text-2xl font-bold">Newsletter</h1>
+          <p className="text-sm md:text-base font-medium">
             Stay in the know, our newsletters give you insights to market
             reports and investment opportunities.
           </p>
           <Newsletter />
         </div>
       </div>
-      <div className="flex items-center justify-center py-6 bg-footer border-t border-t-slate-200 mt-[2%] font-medium">
-        <span>&copy; 2024 Fortress. All rights reserved.</span>
+
+      {/* Copyright */}
+      <div className="flex items-center justify-center py-4 md:py-6 bg-footer border-t border-t-slate-200 mt-8">
+        <span className="text-sm md:text-base font-medium">
+          &copy; 2024 Fortress. All rights reserved.
+        </span>
       </div>
     </div>
   );

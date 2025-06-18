@@ -6,7 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Camera, RefreshCw } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Camera,
+  RefreshCw,
+  DownloadIcon,
+} from "lucide-react";
 import usePostRequest from "../../api/post/postFormData";
 import FormField from "../../components/reuseable/FormField";
 import SelectField from "../../components/reuseable/SelectField";
@@ -15,11 +21,13 @@ import FileInput from "../reuseable/FormInputs/FileInput";
 import { createIndividualAccountSchema } from "../../api/type";
 import useWebcam from "../reuseable/FormInputs/WebCam";
 import LoadingOverlay from "../OverlayLoader";
+import individualpdf from "../../pdf/FortressCapitalIndividualAccountForm.pdf";
+import CustomCheckbox from "../reuseable/FormInputs/CheckBoxInput";
 
 type CreateAccountSchemaType = z.infer<typeof createIndividualAccountSchema>;
 
 const IndividualAccountForm = () => {
-  const [inputValue] = useState("individual"); // Default value is "corporate"
+  const [inputValue] = useState("individual"); // Default value is ""
   // const [checkedItems, setCheckedItems] = useState({
   //   equitytrading: false,
   //   portfoliomanagement: false,
@@ -45,7 +53,7 @@ const IndividualAccountForm = () => {
     progressVariants,
     nextPage,
     prevPage,
-  } = usePageTransition(8, 7);
+  } = usePageTransition(8, 4);
 
   const {
     capturedImage,
@@ -216,9 +224,19 @@ const IndividualAccountForm = () => {
               {onPageChange === 1 && (
                 <div>
                   {/* personnal details */}
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mt-4 uppercase mb-[2rem]">
-                    <span>1. </span> Personal Details
-                  </p>
+                  <div className="flex justify-between items-center">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mt-4 uppercase mb-[2rem]">
+                      <span>1. </span> Personal Details
+                    </p>
+                    <a
+                      href={individualpdf}
+                      target="_blank"
+                      title="Download PDF"
+                      className="p-2 bg-purple-300 rounded-md"
+                    >
+                      <DownloadIcon className="text-purple-900" />
+                    </a>
+                  </div>
                   {/*  */}
                   {/* File Input */}
                   <div className="relative w-fit">
@@ -311,17 +329,17 @@ const IndividualAccountForm = () => {
 
                     <div className=" gap-4 ">
                       <FormField
-                        label="Title:"
+                        label="Title"
                         name="personalDetails.title"
                         error={errors.personalDetails?.title}
-                        placeholder="Mr. , Mrs, Miss e.t.c..."
+                        placeholder="Mr., Mrs, Miss e.t.c..."
                         register={register}
                       />
                     </div>
                     <div>
                       <div className=" items-center gap-4">
                         <FormField
-                          label="Date:"
+                          label="Date"
                           name="personalDetails.date"
                           placeholder={"YYYY-MM-DD"}
                           error={errors.personalDetails?.date}
@@ -335,7 +353,8 @@ const IndividualAccountForm = () => {
                   <div className=" mb-2">
                     {/* Surname Field */}
                     <FormField
-                      label="Surname:"
+                      label="Surname"
+                      required={true}
                       name="personalDetails.surname"
                       register={register}
                       error={errors.personalDetails?.surname}
@@ -346,26 +365,28 @@ const IndividualAccountForm = () => {
                   <div className="lg:grid block items-center grid-cols-2 gap-5 mb-2">
                     {/* Surname Field */}
                     <FormField
-                      label="First Name:"
+                      label="First Name"
+                      required={true}
                       name="personalDetails.firstname"
                       register={register}
                       error={errors.personalDetails?.firstname}
-                      placeholder="Enter your firstname"
+                      placeholder="Enter your first name"
                     />
 
                     {/* Maiden Name Field */}
                     <FormField
-                      label="Maiden Name:"
+                      label="Maiden Name"
                       name="personalDetails.maiden"
                       register={register}
                       error={errors.personalDetails?.maiden}
-                      placeholder="Esther ..."
+                      placeholder="Mother’s maiden name"
                     />
                   </div>
                   {/*  */}
                   <div className="my-3 lg:my-0  gap-3">
                     <FormField
-                      label="Other Names:"
+                      label="Other Names"
+                      required={true}
                       name="personalDetails.othernames"
                       register={register}
                       error={errors.personalDetails?.othernames}
@@ -377,6 +398,7 @@ const IndividualAccountForm = () => {
                     {/* Gender Field */}
                     <SelectField
                       label="Gender"
+                      required={true}
                       name="personalDetails.gender"
                       options={[
                         { value: "male", label: "Male" },
@@ -388,6 +410,7 @@ const IndividualAccountForm = () => {
 
                     <FormField
                       label="Date Of Birth"
+                      required={true}
                       name="personalDetails.dateofbirth"
                       error={errors.personalDetails?.dateofbirth}
                       placeholder={"YYYY-MM-DD"}
@@ -400,7 +423,7 @@ const IndividualAccountForm = () => {
                   <div className="lg:grid block items-center grid-cols-2 gap-5 my-3 lg:my-0 ">
                     {/* Marital Status Field */}
                     <FormField
-                      label="Marital Status:"
+                      label="Marital Status"
                       name="personalDetails.maritalstatus"
                       register={register}
                       error={errors.personalDetails?.maritalstatus}
@@ -409,7 +432,7 @@ const IndividualAccountForm = () => {
 
                     {/* Nationality Field */}
                     <FormField
-                      label="Nationality:"
+                      label="Nationality"
                       name="personalDetails.nationality"
                       register={register}
                       error={errors.personalDetails?.nationality}
@@ -427,7 +450,8 @@ const IndividualAccountForm = () => {
                   <div>
                     {/* Contact Address Field */}
                     <FormField
-                      label="Contact Address:"
+                      label="Contact Address"
+                      required={true}
                       name="contactDetails.contactaddress"
                       register={register}
                       error={errors.contactDetails?.contactaddress}
@@ -436,7 +460,7 @@ const IndividualAccountForm = () => {
 
                     {/* Permanent Address Field */}
                     <FormField
-                      label="Permanent Address:"
+                      label="Permanent Address"
                       name="contactDetails.permanentaddress"
                       register={register}
                       error={errors.contactDetails?.permanentaddress}
@@ -445,7 +469,7 @@ const IndividualAccountForm = () => {
 
                     {/* Mailing Address Field */}
                     <FormField
-                      label="Mailing Address:"
+                      label="Mailing Address"
                       name="contactDetails.mailingaddress"
                       register={register}
                       error={errors.contactDetails?.mailingaddress}
@@ -454,7 +478,7 @@ const IndividualAccountForm = () => {
 
                     {/* Local Govt. Area Field */}
                     <FormField
-                      label="Local Govt. Area:"
+                      label="Local Govt. Area"
                       name="contactDetails.localgovtarea"
                       register={register}
                       error={errors.contactDetails?.localgovtarea}
@@ -463,7 +487,8 @@ const IndividualAccountForm = () => {
 
                     {/* Occupation Field */}
                     <FormField
-                      label="Occupation:"
+                      label="Occupation"
+                      required={true}
                       name="contactDetails.occupation"
                       register={register}
                       error={errors.contactDetails?.occupation}
@@ -472,7 +497,7 @@ const IndividualAccountForm = () => {
 
                     {/* Employer Name / Address Field */}
                     <FormField
-                      label="Employer Name / Address:"
+                      label="Employer Name / Address"
                       name="contactDetails.employernameaddress"
                       register={register}
                       error={errors.contactDetails?.employernameaddress}
@@ -481,7 +506,7 @@ const IndividualAccountForm = () => {
 
                     {/* Business Type Field */}
                     <FormField
-                      label="If Business, Type of Business:"
+                      label="If Business, Type of Business"
                       name="contactDetails.business"
                       register={register}
                       error={errors.contactDetails?.business}
@@ -489,21 +514,28 @@ const IndividualAccountForm = () => {
                     />
 
                     {/* Telephone/Fax Field */}
-                    <FormField
-                      label="Telephone number/ Fax:"
-                      name="contactDetails.phone"
-                      register={register}
-                      error={errors.contactDetails?.phone}
-                      placeholder="Enter your telephone or fax number"
-                      type="tel"
-                      max={15}
-                      min={7}
-                    />
+                    <div className="relative flex items-center mt-3">
+                      <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                        +234
+                      </div>
+                      <FormField
+                        label="Telephone number/ Fax"
+                        required={true}
+                        name="contactDetails.phone"
+                        register={register}
+                        error={errors.contactDetails?.phone}
+                        placeholder="Enter your telephone or fax number"
+                        type="tel"
+                        max={15}
+                        min={7}
+                      />
+                    </div>
 
                     {/* Email Field */}
                     <FormField
-                      label="Email:"
+                      label="Email"
                       name="contactDetails.email"
+                      required={true}
                       register={register}
                       error={errors.contactDetails?.email}
                       placeholder="Enter your email"
@@ -517,22 +549,24 @@ const IndividualAccountForm = () => {
               {onPageChange == 3 && (
                 <div className="mt-10">
                   <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>3. </span> Account Details
+                    <span>3. </span> Bank Account Details
                   </p>
                   <div>
                     {/* Account Name Field */}
                     <FormField
-                      label="Account Name:"
+                      label="Account Name"
+                      required={true}
                       name="bankAccountDetails.accountname"
                       register={register}
                       error={errors.bankAccountDetails?.accountname}
                       placeholder="Enter your account name"
                       type="text"
                     />
-                    <div className="md:grid grid-cols-2 block gap-x-4 ">
+                    <div className="md:grid grid-cols-2 block gap-x-4  items-center ">
                       {/* Account Number Field */}
                       <FormField
-                        label="Account Number:"
+                        label="Account Number"
+                        required={true}
                         name="bankAccountDetails.accountnumber"
                         register={register}
                         error={errors.bankAccountDetails?.accountnumber}
@@ -542,9 +576,15 @@ const IndividualAccountForm = () => {
                       />
 
                       {/* Account Type Field */}
-                      <FormField
-                        label="Account Type:"
+                      <SelectField
+                        label="Account Type"
+                        required={true}
                         name="bankAccountDetails.bankaccounttype"
+                        options={[
+                          { value: "savings", label: "Savings" },
+                          { value: "current", label: "Current" },
+                          { value: "fixed", label: "Fixed Deposit" },
+                        ]}
                         register={register}
                         error={errors.bankAccountDetails?.bankaccounttype}
                         placeholder="Enter your account type"
@@ -553,7 +593,8 @@ const IndividualAccountForm = () => {
                     <div>
                       {/* Bank Name / Address Field */}
                       <FormField
-                        label="Bank Name / Address:"
+                        label="Bank Name / Address"
+                        required={true}
                         name="bankAccountDetails.banknameaddress"
                         register={register}
                         error={errors.bankAccountDetails?.banknameaddress}
@@ -563,7 +604,7 @@ const IndividualAccountForm = () => {
                     <div className="md:grid grid-cols-2 block gap-x-4 ">
                       {/* Sort Code Field */}
                       <FormField
-                        label="Sort Code:"
+                        label="Sort Code"
                         name="bankAccountDetails.sortcode"
                         register={register}
                         error={errors.bankAccountDetails?.sortcode}
@@ -572,11 +613,12 @@ const IndividualAccountForm = () => {
                       />
 
                       <FormField
-                        label="B.V.N. No:"
+                        label="B.V.N"
+                        required={true}
                         name="bankAccountDetails.bvn"
                         register={register}
                         error={errors.bankAccountDetails?.bvn}
-                        placeholder="Enter your B.V.N. number"
+                        placeholder="Enter your B.V.N"
                         max={11}
                         type="number"
                       />
@@ -585,7 +627,7 @@ const IndividualAccountForm = () => {
                     {/*  */}
                     <div className="">
                       <FormField
-                        label="  Date Opened:"
+                        label=" Date Opened"
                         name="bankAccountDetails.dateopened"
                         register={register}
                         error={errors.bankAccountDetails?.dateopened}
@@ -600,239 +642,246 @@ const IndividualAccountForm = () => {
               {/*  */}
               {/*other information */}
               {onPageChange === 4 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>4. </span> Other Information
-                  </p>
-                  <p className="md:text-[18px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    Next of Kin
-                  </p>
-                  <div>
-                    {/*  */}
-                    <FormField
-                      label="Name:"
-                      name="otherInformation.kinname"
-                      register={register}
-                      error={errors.otherInformation?.kinname}
-                      placeholder="Enter name"
-                    />
-                    {/*  */}
-                    <div className="md:grid grid-cols-2 block gap-x-4 ">
+                <>
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>4. </span> Other Information
+                    </p>
+                    <p className="md:text-[18px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      Next of Kin
+                    </p>
+                    <div>
+                      {/*  */}
                       <FormField
-                        label="Relationship with Next of Kin:"
-                        name="otherInformation.relationshipwithnextofkin"
-                        error={
-                          errors.otherInformation?.relationshipwithnextofkin
-                        }
+                        label="Name"
+                        required={true}
+                        name="otherInformation.kinname"
                         register={register}
+                        error={errors.otherInformation?.kinname}
+                        placeholder="Enter name"
                       />
+                      {/*  */}
+                      <div className="md:grid grid-cols-2 block gap-x-4 ">
+                        <FormField
+                          label="Relationship with Next of Kin"
+                          name="otherInformation.relationshipwithnextofkin"
+                          error={
+                            errors.otherInformation?.relationshipwithnextofkin
+                          }
+                          register={register}
+                          placeholder="Enter relationship with next of kin"
+                        />
 
-                      <FormField
-                        label="Address:"
-                        name="otherInformation.kinaddress"
-                        register={register}
-                        error={errors.otherInformation?.kinaddress}
-                        placeholder="Enter address"
-                      />
-                    </div>
-                    {/*  */}
-                    <FormField
-                      label="Tel:"
-                      name="otherInformation.tel"
-                      register={register}
-                      error={errors.otherInformation?.tel}
-                      placeholder="Enter phone number"
-                      type="tel"
-                      min={7}
-                      max={15}
-                    />
-
-                    {/*  */}
-                    <div className=" ">
-                      <FileInput
-                        label="Signature:"
-                        name="otherInformation.signature"
-                        error={errors.otherInformation?.signature}
-                        register={register}
-                      />
-                    </div>
-                    {/*  */}
-                    <div className="mt-4 ">
-                      <FileInput
-                        label="Documents: ( Please scan all documents in a pdf file )"
-                        name="otherInformation.documents"
-                        error={errors.otherInformation?.documents}
-                        register={register}
-                      />
-                    </div>
-                    {/*  */}
-                    <FormField
-                      label="Mandate:"
-                      name="otherInformation.mandate"
-                      register={register}
-                      type="text"
-                      error={errors.otherInformation?.mandate}
-                      placeholder="A and B , A and C to sign"
-                    />
-                  </div>
-                </div>
-              )}
-              {/*  */}
-              {/*Investment */}
-              {onPageChange === 5 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>5. </span>Investment Details
-                  </p>
-                  <FormField
-                    label="Initial Investment Amount:"
-                    name="investmentDetails.investmentamount"
-                    type="number"
-                    register={register}
-                    error={errors.investmentDetails?.investmentamount}
-                  />
-                </div>
-              )}
-              {/*  */}
-              {/*Service Required */}
-              {onPageChange === 6 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>6. </span>Service Required
-                  </p>
-                  <div className="my-4">
-                    <SelectField
-                      label="Equity Trading / Dealing Service"
-                      name="serviceRequired.equitytrading"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
-                      register={register}
-                    />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
-                      label="Portfolio Management Service"
-                      name="serviceRequired.portfoliomanagement"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
-                      register={register}
-                    />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
-                      label="Investment Advisory Service"
-                      name="serviceRequired.investmentadvisory"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
-                      register={register}
-                    />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
-                      label="Fixed Income"
-                      name="serviceRequired.fixedincome"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
-                      register={register}
-                    />
-                  </div>
-                  {/* <CustomCheckbox
-                    id="equity_trading"
-                    label="Equity Trading / Dealing Service"
-                    name="serviceRequired.equitytrading"
-                    checked={checkedItems.equitytrading}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="portfolio_management"
-                    label="Portfolio Management Service"
-                    name="serviceRequired.portfoliomanagement"
-                    checked={checkedItems.portfoliomanagement}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="investment_advisory"
-                    label="Investment Advisory Service"
-                    name="serviceRequired.investmentadvisory"
-                    checked={checkedItems.investmentadvisory}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="fixed_income"
-                    label="Fixed Income"
-                    name="serviceRequired.fixedincome"
-                    checked={checkedItems.fixedincome}
-                    onChange={handleChange}
-                  /> */}
-                </div>
-              )}
-              {/*  */}
-              {/* Indicate If You Are A Politically Exposed
-            Person (PEP) Or Affiliate To A PEP? */}
-              {onPageChange === 7 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>7. </span>Please Indicate If You Are A Politically
-                    Exposed Person (PEP) Or Affiliate To A PEP?
-                  </p>
-                  <SelectField
-                    label="Politically Exposed:"
-                    name="politicallyExposed.ifExposed"
-                    options={[
-                      { value: "Yes", label: "Yes" },
-                      { value: "No", label: "No" },
-                    ]}
-                    register={register}
-                    error={errors.politicallyExposed?.ifExposed}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      setIfYes(e.target.value === "Yes")
-                    }
-                  />
-
-                  <div>
-                    {/*  */}
-                    {ifYes && (
-                      <div className=" mt-3 gap-3">
-                        <label className=" text-[18px] font-[400]">
-                          If yes, Please give details:
-                        </label>
-
-                        <input
-                          type="text"
-                          className="mt-1 block w-full  px-3 py-2 border-b-2  border-dashed border-b-gray-500 rounded-md accent-[#692371]  shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none"
-                          {...register("politicallyExposed.ifyesdetails")}
-                          required
+                        <FormField
+                          label="Address"
+                          name="otherInformation.kinaddress"
+                          register={register}
+                          error={errors.otherInformation?.kinaddress}
+                          placeholder="Enter address"
                         />
                       </div>
-                    )}
+                      {/*  */}
+                      <div className="relative flex items-center mt-3">
+                        <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                          +234
+                        </div>
+                        <FormField
+                          label="Tel"
+                          required={true}
+                          name="otherInformation.tel"
+                          register={register}
+                          error={errors.otherInformation?.tel}
+                          placeholder="Enter phone number"
+                          type="tel"
+                          min={7}
+                          max={15}
+                        />
+                      </div>
+                      {/*  */}
+                      <div className=" ">
+                        <FileInput
+                          label="Signature"
+                          required={true}
+                          name="otherInformation.signature"
+                          error={errors.otherInformation?.signature}
+                          register={register}
+                        />
+                      </div>
+                      {/*  */}
+                      <div className="mt-4 ">
+                        <FileInput
+                          label="Documents"
+                          desc="(Please, scan  documents into a pdf file)"
+                          desc2="(Means of ID e.g Driver’s licence, International passport, Voter’s card;
+Proof of Address e.g Electricity bill, Water bill etc.)
+"
+                          required={true}
+                          multiple={true}
+                          name="otherInformation.documents"
+                          error={errors.otherInformation?.documents}
+                          register={register}
+                        />
+                      </div>
+                      {/*  */}
+                      <FormField
+                        label="Mandate"
+                        desc="(For joint accounts only, please indicate the names of the signatories e.g A and B , A and C to sign)"
+                        name="otherInformation.mandate"
+                        register={register}
+                        type="text"
+                        error={errors.otherInformation?.mandate}
+                        placeholder="A and B , A and C to sign"
+                      />
+                    </div>
+                  </div>
 
-                    {/*  */}
-                    <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
-                      Politically Exposed persons are persons who are or have
-                      (in the past) entrusted with a prominent public function
-                      (e.g Head of state or Government , Governers, Local
-                      Government Chairman, Senior Politicalians Senior
-                      Government Officials, Judicial or Military Officials,
-                      Senior Executive of State Owned Corporations, Important
-                      Political Party Officials, Members of Royal Families) both
-                      in foreign counties and in Nigeria, including the family
-                      members or close associates
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>5. </span>Investment Details
                     </p>
-                    <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
-                      I (We) confirm that the information provided for opening
-                      an account with Fortress Capital is truem We agree to
-                      terms and conditions for the operation of the account
+                    <FormField
+                      label="Initial Investment Amount"
+                      name="investmentDetails.investmentamount"
+                      type="number"
+                      placeholder="Enter initial investment amount"
+                      register={register}
+                      error={errors.investmentDetails?.investmentamount}
+                    />
+                  </div>
+
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>6. </span>Service Required{" "}
+                      <span className="text-sm font-medium ml-2 text-slate-500 capitalize">
+                        (Check the box if yes)
+                      </span>
                     </p>
-                    {/*  */}
-                    {/* <div className=" mt-5 ">
+                    {/* <div className="my-4"> */}
+                    {/* <SelectField
+                        label="Equity Trading / Dealing Service"
+                        name="serviceRequired.equitytrading"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Portfolio Management Service"
+                        name="serviceRequired.portfoliomanagement"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Investment Advisory Service"
+                        name="serviceRequired.investmentadvisory"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Fixed Income"
+                        name="serviceRequired.fixedincome"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div> */}{" "}
+                    <CustomCheckbox
+                      id="equity_trading"
+                      label="Equity Trading / Dealing Service"
+                      name="serviceRequired.equitytrading"
+                      register={register}
+                    />
+                    <CustomCheckbox
+                      id="portfolio_management"
+                      label="Portfolio Management Service"
+                      name="serviceRequired.portfoliomanagement"
+                      register={register}
+                    />
+                    <CustomCheckbox
+                      id="investment_advisory"
+                      label="Investment Advisory Service"
+                      name="serviceRequired.investmentadvisory"
+                      register={register}
+                    />
+                    <CustomCheckbox
+                      id="fixed_income"
+                      label="Fixed Income"
+                      name="serviceRequired.fixedincome"
+                      register={register}
+                    />
+                  </div>
+
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>7. </span>Please Indicate If You Are A Politically
+                      Exposed Person (PEP) Or Affiliate To A PEP?
+                    </p>
+                    <SelectField
+                      label="Politically Exposed:"
+                      name="politicallyExposed.ifExposed"
+                      options={[
+                        { value: "Yes", label: "Yes" },
+                        { value: "No", label: "No" },
+                      ]}
+                      register={register}
+                      error={errors.politicallyExposed?.ifExposed}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                        setIfYes(e.target.value === "Yes")
+                      }
+                    />
+
+                    <div>
+                      {/*  */}
+                      {ifYes && (
+                        <div className=" mt-3 gap-3">
+                          <label className=" text-[18px] font-[400]">
+                            If yes, Please give details:
+                          </label>
+
+                          <input
+                            type="text"
+                            className="mt-1 block w-full  px-3 py-2 border-b-2  border-dashed border-b-gray-500 rounded-md accent-[#692371]  shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none"
+                            {...register("politicallyExposed.ifyesdetails")}
+                            required
+                          />
+                        </div>
+                      )}
+
+                      {/*  */}
+                      <p className="text-black font-[500] text-[18px] leading-relaxed mt-[2rem]">
+                        Politically Exposed persons are persons who are or have
+                        (in the past) entrusted with a prominent public function
+                        (e.g Head of state or Government , Governers, Local
+                        Government Chairman, Senior Politicalians Senior
+                        Government Officials, Judicial or Military Officials,
+                        Senior Executive of State Owned Corporations, Important
+                        Political Party Officials, Members of Royal Families)
+                        both in foreign counties and in Nigeria, including the
+                        family members or close associates.
+                      </p>
+                      <p className="text-black font-[500] text-[18px] leading-relaxed mt-[2rem]">
+                        I (We), confirm that the information provided for
+                        opening an account with Fortress Capital is truem We
+                        agree to terms and conditions for the operation of the
+                        account.
+                      </p>
+                      {/*  */}
+                      {/* <div className=" mt-5 ">
                       <label className=" text-[18px] font-[400] mb-1">
                         Client Signature & date:
                       </label>
@@ -853,8 +902,9 @@ const IndividualAccountForm = () => {
                         />
                       </div>
                     </div> */}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
 
               {/*  */}

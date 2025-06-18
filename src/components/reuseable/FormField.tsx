@@ -8,6 +8,8 @@ export default function FormField({
   register: registerFn,
   max,
   min,
+  required = false,
+  desc = "",
   ...props
 }: any) {
   // Example error display component
@@ -19,20 +21,25 @@ export default function FormField({
   return (
     <div className=" my-4  w-full">
       <div className="flex items-center gap-8 ">
-        <label htmlFor={name} className="text-[18px] font-[400]">
-          {label}
+        <label
+          htmlFor={name}
+          className="text-[18px] font-[500] text-black mb-2"
+        >
+          {label} {required && <span className="text-red-500">*</span>}{" "}
+          <p className="text-gray-500 text-sm">{desc}</p>
         </label>
       </div>
       <input
         type={type}
-        className={`mt-1 block w-full px-3 py-2 border border-gray-500 rounded-md shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none ${
+        className={`mt-1 block w-full px-3 py-2 appearance-none border border-gray-500 rounded-md shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none ${
           error ? "border-red-500" : "border-gray-300"
-        }`}
+        } ${type === "tel" ? "pl-18" : ""}`}
         {...registerFn(name)}
         {...props}
         max={max}
         min={min}
-        // required=
+        required={required}
+        desc={desc}
       />
       <ErrorMessage error={error} />
     </div>

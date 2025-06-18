@@ -27,42 +27,40 @@ const OurService = () => {
   ];
 
   return (
-    <section className="w-full p-4 md:p-8  mt-[5rem]  bg-gradient-to-b from-white to-slate-50">
-      <div className="  mx-auto">
-        <div className="mb-12 md:mb-16">
-          <div className=" parentline md:pl-[1%] shadow-sm">
-            <h1 className=" text-[#692371] md:text-[35px] text-[18px] font-semibold lg:leading-[70px] md:leading-[60px]">
-              Our Services
-            </h1>
-          </div>
+    <section className="w-full px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20   ">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-8 sm:mb-12 lg:mb-16">
+          <h1 className="text-[#692371] text-2xl sm:text-3xl lg:text-4xl font-semibold leading-tight border-b-2 border-[#f49d3f] w-fit">
+            Our Services
+          </h1>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group bg-white border border-neutral-100 hover:shadow-sm rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-105"
+              className="group bg-white border border-neutral-100 shadow-sm hover:shadow-lg rounded-2xl overflow-hidden transform transition-all duration-300 hover:scale-[1.02]"
             >
               <div className="relative">
                 <LazyImage
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-56 md:h-64 object-cover rounded-2xl transform transition-transform duration-300 group-hover:scale-95"
+                  className="w-full h-48 sm:h-52 lg:h-64 object-cover transform transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              <div className="p-6 lg:p-8 md:p-2">
-                <p className="text-[21px] lg:text-2xl text-[#F49D3F] font-semibold mb-4 group-hover:text-[#692371] transition-colors duration-300">
+              <div className="p-4 sm:p-6 lg:p-8">
+                <h2 className="text-lg sm:text-xl lg:text-2xl text-[#F49D3F] font-semibold mb-3 sm:mb-4 group-hover:text-[#692371] transition-colors duration-300">
                   {service.title}
-                </p>
-                <p className="text-base text-gray-600 mb-6 line-clamp-4">
+                </h2>
+                <p className="text-sm sm:text-base text-gray-600 mb-6 line-clamp-4">
                   {service.description}
                 </p>
                 <div className="flex justify-end">
                   <Link
                     to={`services?page=${encodeURIComponent(service.title)}`}
-                    className="inline-flex items-center gap-2 text-white bg-[#F49D3F] rounded-lg px-6 py-3 hover:bg-[#692371] transition-colors duration-300 group-hover:shadow-md"
+                    className="inline-flex items-center gap-2 text-white bg-[#F49D3F] rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base hover:bg-[#692371] transition-colors duration-300 group-hover:shadow-md"
                   >
                     Read more
                     <svg

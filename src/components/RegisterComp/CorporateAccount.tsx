@@ -6,15 +6,23 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Plus, Trash2, Camera } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  DownloadIcon,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import usePostRequest from "../../api/post/postFormData";
 import FormField from "../../components/reuseable/FormField";
 import SelectField from "../../components/reuseable/SelectField";
 import usePageTransition from "./FormFunctions";
 import FileInput from "../reuseable/FormInputs/FileInput";
 import { createCorporateAccountSchema } from "../../api/type";
-import useWebcam from "../reuseable/FormInputs/WebCam";
+// import useWebcam from "../reuseable/FormInputs/WebCam";
 import LoadingOverlay from "../OverlayLoader";
+import corporatepdf from "../../pdf/FortressCapitalCorporateAccountForm.pdf";
+import CustomCheckbox from "../reuseable/FormInputs/CheckBoxInput";
 
 type CreateAccountSchemaType = z.infer<typeof createCorporateAccountSchema>;
 
@@ -45,21 +53,21 @@ const CorporateAccountForm = () => {
     progressVariants,
     nextPage,
     prevPage,
-  } = usePageTransition(8, 7);
+  } = usePageTransition(4, 3);
 
-  const {
-    capturedImage,
+  // const {
+  //   capturedImage,
 
-    videoRef,
-    startCamera,
-    stopCamera,
-    captureImage,
-    handleFileChange,
-    isStreamActive,
-    setCapturedImage,
-    setFileList,
-    fileList,
-  } = useWebcam(); // Use the custom hook
+  //   videoRef,
+  //   startCamera,
+  //   stopCamera,
+  //   captureImage,
+  //   handleFileChange,
+  //   isStreamActive,
+  //   setCapturedImage,
+  //   setFileList,
+  //   fileList,
+  // } = useWebcam(); // Use the custom hook
   //
   const {
     register,
@@ -70,30 +78,26 @@ const CorporateAccountForm = () => {
     resolver: zodResolver(createCorporateAccountSchema),
     mode: "onSubmit",
     defaultValues: {
-      personalDetails: {
-        passportimg: fileList && fileList[0],
-        firstname: "",
-        surname: "",
-        maiden: "",
-        othernames: "",
-        title: "",
-        date: "",
-        gender: "",
+      businessDetails: {
         accounttype: "corporate",
-        maritalstatus: "",
-        nationality: "",
-        dateofbirth: "",
+        rcorbn: "",
+        dateofincorporation: "",
+        businessaddress: "",
+        branchofficeaddress: "",
       },
       contactDetails: {
-        contactaddress: "",
-        permanentaddress: "",
-        mailingaddress: "",
-        localgovtarea: "",
-        occupation: "",
-        employernameaddress: "",
-        business: "",
-        email: "",
-        phone: "",
+        nameofdirector_a: "",
+        director_a_bvn: "",
+        director_a_phone: "",
+        nameofdirector_b: "",
+        director_b_bvn: "",
+        director_b_phone: "",
+        nameofdirector_c: "",
+        director_c_bvn: "",
+        director_c_phone: "",
+        nameofdirector_d: "",
+        director_d_bvn: "",
+        director_d_phone: "",
       },
       bankAccountDetails: {
         accountname: "",
@@ -103,15 +107,6 @@ const CorporateAccountForm = () => {
         sortcode: "",
         bvn: "",
         dateopened: "",
-      },
-      otherInformation: {
-        kinname: "",
-        relationshipwithnextofkin: "",
-        kinaddress: "",
-        tel: "",
-        signature: null, // Default for file upload
-        documents: null,
-        mandate: "",
       },
       investmentDetails: {
         investmentamount: "",
@@ -125,13 +120,11 @@ const CorporateAccountForm = () => {
       politicallyExposed: {
         ifExposed: "",
         ifyesdetails: "",
-        // uploadpepsignature: null, // Default for file upload
-        // pepdate: "",
       },
       corporateAccount: [
         {
           names: "",
-          signature: null, // Default for file upload
+          signature: null,
           designation: "",
           category: "",
         },
@@ -153,38 +146,17 @@ const CorporateAccountForm = () => {
       });
     }
 
-    if (data.personalDetails.passportimg) {
-      formData.append("passportimg", data.personalDetails.passportimg[0]);
-    }
-
-    // Add signature if exists
-    if (data.otherInformation.signature) {
-      formData.append("signature", data.otherInformation.signature[0]);
-    }
-
-    // Add documents if exists
-    if (data.otherInformation.documents) {
-      formData.append("documents", data.otherInformation.documents[0]);
-    }
-
     // Convert JSON data into a form field
     formData.append(
-      "personalDetails",
-      JSON.stringify({ ...data.personalDetails, passportimg: undefined })
+      "businessDetails",
+      JSON.stringify({ ...data.businessDetails, passportimg: undefined })
     );
     formData.append("contactDetails", JSON.stringify(data.contactDetails));
     formData.append(
       "bankAccountDetails",
       JSON.stringify(data.bankAccountDetails)
     );
-    formData.append(
-      "otherInformation",
-      JSON.stringify({
-        ...data.otherInformation,
-        documents: undefined,
-        signature: undefined,
-      })
-    );
+
     formData.append(
       "investmentDetails",
       JSON.stringify(data.investmentDetails)
@@ -268,307 +240,219 @@ const CorporateAccountForm = () => {
               )}
 
               {onPageChange === 1 && (
-                <div>
-                  {/* personnal details */}
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mt-4 uppercase mb-[2rem]">
-                    <span>1. </span> Personal Details
-                  </p>
-                  {/*  */}
-                  {/* File Input */}
-                  <div className="relative w-fit">
-                    <label className="md:w-[350px] md:h-[400] w-full cursor-pointer ">
-                      <div className="flex items-center justify-center md:w-[350px] w-full h-12 px-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 transition-colors">
-                        <Camera className="w-5 h-5 mr-2 text-gray-500" />
-                        <span className="text-sm text-gray-500">
-                          Choose image or capture from webcam
-                        </span>
-                      </div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        {...register("personalDetails.passportimg", {
-                          onChange: handleFileChange,
-                        })}
-                      />
-                    </label>
-
-                    {/* Webcam Preview */}
-                    {!capturedImage && (
-                      <div className="relative md:w-[350px]  md:h-[400] aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <video
-                          ref={videoRef}
-                          autoPlay
-                          playsInline
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-
-                    {/* Captured Image Preview */}
-                    {capturedImage && (
-                      <div className="md:w-[350px] md:h-[400] w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                        <img
-                          src={capturedImage}
-                          alt="Captured"
-                          width={200}
-                          height={200}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-
-                    {/* Controls */}
-                    <div className="flex gap-4 absolute bottom-0 right-2">
-                      {!isStreamActive && !capturedImage && (
-                        <button
-                          onClick={startCamera}
-                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                          title="Start Camera"
-                        >
-                          <Camera />
-                        </button>
-                      )}
-                      {isStreamActive && (
-                        <button
-                          onClick={captureImage}
-                          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                          title="Capture"
-                        >
-                          <Camera />
-                        </button>
-                      )}
-                      {(isStreamActive || capturedImage) && (
-                        <button
-                          onClick={() => {
-                            stopCamera();
-                            setCapturedImage(null);
-                            setFileList([]);
-                          }}
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                          title="Reset"
-                        >
-                          Reset
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                  {/*  */}
-                  <div className="lg:grid block items-center grid-cols-3 mt-2 gap-4">
-                    <FormField
-                      label="Account Type:  Corporate"
-                      name="personalDetails.accounttype"
-                      value={inputValue}
-                      register={register}
-                      type="hidden"
-                    />
-
-                    <div className=" gap-4 ">
-                      <FormField
-                        label="Title:"
-                        name="personalDetails.title"
-                        error={errors.personalDetails?.title}
-                        placeholder="Mr. , Mrs, Miss e.t.c..."
-                        register={register}
-                      />
-                    </div>
-                    <div>
-                      <div className=" items-center gap-4">
-                        <FormField
-                          label="Date:"
-                          name="personalDetails.date"
-                          placeholder={"YYYY-MM-DD"}
-                          error={errors.personalDetails?.date}
-                          register={register}
-                          type="date"
-                        />
-                      </div>{" "}
-                    </div>
-                  </div>
-
-                  <div className=" mb-2">
-                    {/* Surname Field */}
-                    <FormField
-                      label="Surname:"
-                      name="personalDetails.surname"
-                      register={register}
-                      error={errors.personalDetails?.surname}
-                      placeholder="Enter your surname"
-                    />
-                  </div>
-
-                  <div className="lg:grid block items-center grid-cols-2 gap-5 mb-2">
-                    {/* Surname Field */}
-                    <FormField
-                      label="First Name:"
-                      name="personalDetails.firstname"
-                      register={register}
-                      error={errors.personalDetails?.firstname}
-                      placeholder="Enter your firstname"
-                    />
-
-                    {/* Maiden Name Field */}
-                    <FormField
-                      label="Maiden Name:"
-                      name="personalDetails.maiden"
-                      register={register}
-                      error={errors.personalDetails?.maiden}
-                      placeholder="Esther ..."
-                    />
-                  </div>
-                  {/*  */}
-                  <div className="my-3 lg:my-0  gap-3">
-                    <FormField
-                      label="Other Names:"
-                      name="personalDetails.othernames"
-                      register={register}
-                      error={errors.personalDetails?.othernames}
-                      placeholder="Enter other names"
-                    />
-                  </div>
-                  {/*  */}
-                  <div className="lg:flex block items-center gap-10  my-2">
-                    {/* Gender Field */}
-                    <SelectField
-                      label="Gender"
-                      name="personalDetails.gender"
-                      options={[
-                        { value: "male", label: "Male" },
-                        { value: "female", label: "Female" },
-                      ]}
-                      register={register}
-                      error={errors.personalDetails?.gender}
-                    />
-
-                    <FormField
-                      label="Date Of Birth"
-                      name="personalDetails.dateofbirth"
-                      error={errors.personalDetails?.dateofbirth}
-                      placeholder={"YYYY-MM-DD"}
-                      register={register}
-                      type="date"
-                    />
-                  </div>
-                  {/*  */}
-                  {/*  */}
-                  <div className="lg:grid block items-center grid-cols-2 gap-5 my-3 lg:my-0 ">
-                    {/* Marital Status Field */}
-                    <FormField
-                      label="Marital Status:"
-                      name="personalDetails.maritalstatus"
-                      register={register}
-                      error={errors.personalDetails?.maritalstatus}
-                      placeholder="Enter your marital status"
-                    />
-
-                    {/* Nationality Field */}
-                    <FormField
-                      label="Nationality:"
-                      name="personalDetails.nationality"
-                      register={register}
-                      error={errors.personalDetails?.nationality}
-                      placeholder="Enter your nationality"
-                    />
-                  </div>
-                </div>
-              )}
-              {/* Contact Details */}
-              {onPageChange === 2 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>2. </span> Contact Details
-                  </p>
+                <>
                   <div>
-                    {/* Contact Address Field */}
-                    <FormField
-                      label="Contact Address:"
-                      name="contactDetails.contactaddress"
-                      register={register}
-                      error={errors.contactDetails?.contactaddress}
-                      placeholder="Enter your contact address"
-                    />
+                    {/* personnal details */}
+                    <div className="flex justify-between items-center">
+                      <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mt-4 uppercase mb-[2rem]">
+                        <span>1. </span> Business or Company Details
+                      </p>
 
-                    {/* Permanent Address Field */}
-                    <FormField
-                      label="Permanent Address:"
-                      name="contactDetails.permanentaddress"
-                      register={register}
-                      error={errors.contactDetails?.permanentaddress}
-                      placeholder="Enter your permanent address"
-                    />
+                      <a
+                        href={corporatepdf}
+                        target="_blank"
+                        title="Download PDF"
+                        className="p-2 bg-purple-300 rounded-md"
+                      >
+                        <DownloadIcon className="text-purple-900" />
+                      </a>
+                    </div>
+                    {/*  */}
+                    <div className="lg:grid block items-center grid-cols-3 mt-2 gap-4">
+                      <FormField
+                        label="Account Type:  Corporate"
+                        name="businessDetails.businessname"
+                        value={inputValue}
+                        register={register}
+                        type="hidden"
+                      />
 
-                    {/* Mailing Address Field */}
-                    <FormField
-                      label="Mailing Address:"
-                      name="contactDetails.mailingaddress"
-                      register={register}
-                      error={errors.contactDetails?.mailingaddress}
-                      placeholder="Enter your mailing address"
-                    />
+                      <div className=" gap-4 ">
+                        <FormField
+                          label="RC or BN Number"
+                          placeholder="Enter your RC or BN number"
+                          required={true}
+                          name="businessDetails.rcorbn"
+                          error={errors.businessDetails?.rcorbn}
+                          register={register}
+                        />
+                      </div>
+                      <div>
+                        <div className=" items-center gap-4">
+                          <FormField
+                            label="Date of Incorporation"
+                            required={true}
+                            name="businessDetails.dateofincorporation"
+                            placeholder={"YYYY-MM-DD"}
+                            error={errors.businessDetails?.dateofincorporation}
+                            register={register}
+                            type="date"
+                          />
+                        </div>{" "}
+                      </div>
+                    </div>
 
-                    {/* Local Govt. Area Field */}
-                    <FormField
-                      label="Local Govt. Area:"
-                      name="contactDetails.localgovtarea"
-                      register={register}
-                      error={errors.contactDetails?.localgovtarea}
-                      placeholder="Enter your local government area"
-                    />
-
-                    {/* Occupation Field */}
-                    <FormField
-                      label="Occupation:"
-                      name="contactDetails.occupation"
-                      register={register}
-                      error={errors.contactDetails?.occupation}
-                      placeholder="Enter your occupation"
-                    />
-
-                    {/* Employer Name / Address Field */}
-                    <FormField
-                      label="Employer Name / Address:"
-                      name="contactDetails.employernameaddress"
-                      register={register}
-                      error={errors.contactDetails?.employernameaddress}
-                      placeholder="Enter your employer name/address"
-                    />
-
-                    {/* Business Type Field */}
-                    <FormField
-                      label="If Business, Type of Business:"
-                      name="contactDetails.business"
-                      register={register}
-                      error={errors.contactDetails?.business}
-                      placeholder="Enter type of business"
-                    />
-
-                    {/* Telephone/Fax Field */}
-                    <FormField
-                      label="Telephone number/ Fax:"
-                      name="contactDetails.phone"
-                      register={register}
-                      error={errors.contactDetails?.phone}
-                      placeholder="Enter your telephone or fax number"
-                      type="tel"
-                      max={15}
-                      min={7}
-                    />
-
-                    {/* Email Field */}
-                    <FormField
-                      label="Email:"
-                      name="contactDetails.email"
-                      register={register}
-                      error={errors.contactDetails?.email}
-                      placeholder="Enter your email"
-                      type="email"
-                    />
+                    <div className="lg:grid block items-center grid-cols-2 gap-5 mb-2">
+                      {/* Surname Field */}
+                      <FormField
+                        label="Business Address"
+                        required={true}
+                        name="businessDetails.businessaddress"
+                        register={register}
+                        error={errors.businessDetails?.businessaddress}
+                        placeholder="Enter your business or company address"
+                      />
+                      <FormField
+                        label="Branch Office Address"
+                        required={true}
+                        name="businessDetails.branchofficeaddress"
+                        register={register}
+                        error={errors.businessDetails?.branchofficeaddress}
+                        placeholder="Enter your firstname"
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>2. </span> Contact Details
+                    </p>
+                    <div>
+                      {/* Contact Address Field */}
+                      <div className="lg:grid block items-center grid-cols-3 gap-5 mb-2">
+                        <FormField
+                          label="Name of Director"
+                          name="contactDetails.nameofdirector_a"
+                          register={register}
+                          error={errors.contactDetails?.nameofdirector_a}
+                          placeholder="Enter Director's Name"
+                        />
+
+                        {/* Permanent Address Field */}
+                        <FormField
+                          label="Director’s BVN"
+                          name="contactDetails.director_a_bvn"
+                          register={register}
+                          error={errors.contactDetails?.director_a_bvn}
+                          placeholder="Enter director's BVN"
+                        />
+                        <div className="relative flex items-center ">
+                          <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                            +234
+                          </div>
+                          <FormField
+                            label="Director’s phone number"
+                            name="contactDetails.director_a_phone"
+                            register={register}
+                            error={errors.contactDetails?.director_a_phone}
+                            placeholder="Enter director's phone number
+                          "
+                            type="tel"
+                          />
+                        </div>
+                      </div>
+                      <div className="lg:grid block items-center grid-cols-3 gap-5 mb-2">
+                        <FormField
+                          label="Name of Director"
+                          name="contactDetails.nameofdirector_b"
+                          register={register}
+                          error={errors.contactDetails?.nameofdirector_b}
+                          placeholder="Enter Director's Name"
+                        />
+
+                        {/* Permanent Address Field */}
+                        <FormField
+                          label="Director’s BVN"
+                          name="contactDetails.director_b_bvn"
+                          register={register}
+                          error={errors.contactDetails?.director_b_bvn}
+                          placeholder="Enter director's BVN"
+                        />
+                        <div className="relative flex items-center ">
+                          <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                            +234
+                          </div>
+                          <FormField
+                            label="Director’s phone number"
+                            name="contactDetails.director_b_phone"
+                            register={register}
+                            error={errors.contactDetails?.director_b_phone}
+                            placeholder="Enter director's phone number
+                          "
+                            type="tel"
+                          />
+                        </div>
+                      </div>
+                      <div className="lg:grid block items-center grid-cols-3 gap-5 mb-2">
+                        <FormField
+                          label="Name of Director"
+                          name="contactDetails.nameofdirector_c"
+                          register={register}
+                          error={errors.contactDetails?.nameofdirector_c}
+                          placeholder="Enter Director's Name"
+                        />
+
+                        {/* Permanent Address Field */}
+                        <FormField
+                          label="Director’s BVN"
+                          name="contactDetails.director_c_bvn"
+                          register={register}
+                          error={errors.contactDetails?.director_c_bvn}
+                          placeholder="Enter director's BVN"
+                        />
+                        <div className="relative flex items-center ">
+                          <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                            +234
+                          </div>
+                          <FormField
+                            label="Director’s phone number"
+                            name="contactDetails.director_c_phone"
+                            register={register}
+                            error={errors.contactDetails?.director_c_phone}
+                            placeholder="Enter director's phone number
+                          "
+                            type="tel"
+                          />
+                        </div>
+                      </div>
+                      <div className="lg:grid block items-center grid-cols-3 gap-5 mb-2">
+                        <FormField
+                          label="Name of Director"
+                          name="contactDetails.nameofdirector_d"
+                          register={register}
+                          error={errors.contactDetails?.nameofdirector_d}
+                          placeholder="Enter Director's Name"
+                        />
+
+                        {/* Permanent Address Field */}
+                        <FormField
+                          label="Director’s BVN"
+                          name="contactDetails.director_d_bvn"
+                          register={register}
+                          error={errors.contactDetails?.director_d_bvn}
+                          placeholder="Enter director's BVN"
+                        />
+                        <div className="relative flex items-center ">
+                          <div className="px-3 py-2  bg-gray-300 mr-1 rounded-tl-md rounded-bl-md absolute left-[0.09rem] top-14 ">
+                            +234
+                          </div>
+                          <FormField
+                            label="Director’s phone number"
+                            name="contactDetails.director_d_phone"
+                            register={register}
+                            error={errors.contactDetails?.director_a_phone}
+                            placeholder="Enter director's phone number
+                          "
+                            type="tel"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
               {/*  */}
               {/*Account Details */}
-              {onPageChange == 3 && (
+              {onPageChange == 2 && (
                 <div className="mt-10">
                   <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
                     <span>3. </span> Account Details
@@ -576,17 +460,19 @@ const CorporateAccountForm = () => {
                   <div>
                     {/* Account Name Field */}
                     <FormField
-                      label="Account Name:"
+                      label="Account Name"
+                      required={true}
                       name="bankAccountDetails.accountname"
                       register={register}
                       error={errors.bankAccountDetails?.accountname}
                       placeholder="Enter your account name"
                       type="text"
                     />
-                    <div className="md:grid grid-cols-2 block gap-x-4 ">
+                    <div className="md:grid grid-cols-2 block gap-x-4 items-center">
                       {/* Account Number Field */}
                       <FormField
-                        label="Account Number:"
+                        label="Account Number"
+                        required={true}
                         name="bankAccountDetails.accountnumber"
                         register={register}
                         error={errors.bankAccountDetails?.accountnumber}
@@ -596,9 +482,15 @@ const CorporateAccountForm = () => {
                       />
 
                       {/* Account Type Field */}
-                      <FormField
-                        label="Account Type:"
+                      <SelectField
+                        label="Account Type"
+                        required={true}
                         name="bankAccountDetails.bankaccounttype"
+                        options={[
+                          { value: "savings", label: "Savings" },
+                          { value: "current", label: "Current" },
+                          { value: "fixed", label: "Fixed Deposit" },
+                        ]}
                         register={register}
                         error={errors.bankAccountDetails?.bankaccounttype}
                         placeholder="Enter your account type"
@@ -607,7 +499,8 @@ const CorporateAccountForm = () => {
                     <div>
                       {/* Bank Name / Address Field */}
                       <FormField
-                        label="Bank Name / Address:"
+                        label="Bank Name / Address"
+                        required={true}
                         name="bankAccountDetails.banknameaddress"
                         register={register}
                         error={errors.bankAccountDetails?.banknameaddress}
@@ -626,7 +519,8 @@ const CorporateAccountForm = () => {
                       />
 
                       <FormField
-                        label="B.V.N. No:"
+                        label="B.V.N. No"
+                        required={true}
                         name="bankAccountDetails.bvn"
                         register={register}
                         error={errors.bankAccountDetails?.bvn}
@@ -639,7 +533,7 @@ const CorporateAccountForm = () => {
                     {/*  */}
                     <div className="">
                       <FormField
-                        label="  Date Opened:"
+                        label="  Date Opened"
                         name="bankAccountDetails.dateopened"
                         register={register}
                         error={errors.bankAccountDetails?.dateopened}
@@ -652,241 +546,164 @@ const CorporateAccountForm = () => {
                 </div>
               )}
               {/*  */}
-              {/*other information */}
-              {onPageChange === 4 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>4. </span> Other Information
-                  </p>
-                  <p className="md:text-[18px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    Next of Kin
-                  </p>
-                  <div>
-                    {/*  */}
-                    <FormField
-                      label="Name:"
-                      name="otherInformation.kinname"
-                      register={register}
-                      error={errors.otherInformation?.kinname}
-                      placeholder="Enter name"
-                    />
-                    {/*  */}
-                    <div className="md:grid grid-cols-2 block gap-x-4 ">
-                      <FormField
-                        label="Relationship with Next of Kin:"
-                        name="otherInformation.relationshipwithnextofkin"
-                        error={
-                          errors.otherInformation?.relationshipwithnextofkin
-                        }
-                        register={register}
-                      />
 
-                      <FormField
-                        label="Address:"
-                        name="otherInformation.kinaddress"
-                        register={register}
-                        error={errors.otherInformation?.kinaddress}
-                        placeholder="Enter address"
-                      />
-                    </div>
-                    {/*  */}
-                    <FormField
-                      label="Tel:"
-                      name="otherInformation.tel"
-                      register={register}
-                      error={errors.otherInformation?.tel}
-                      placeholder="Enter phone number"
-                      type="tel"
-                      min={7}
-                      max={15}
-                    />
-
-                    {/*  */}
-                    <div className=" ">
-                      <FileInput
-                        label="Signature:"
-                        name="otherInformation.signature"
-                        error={errors.otherInformation?.signature}
-                        register={register}
-                      />
-                    </div>
-                    {/*  */}
-                    <div className=" ">
-                      <FileInput
-                        label="Documents: ( Please scan all documents in a pdf file )"
-                        name="otherInformation.documents"
-                        error={errors.otherInformation?.documents}
-                        register={register}
-                      />
-                    </div>
-                    {/*  */}
-                    <FormField
-                      label="Mandate:"
-                      name="otherInformation.mandate"
-                      register={register}
-                      type="text"
-                      error={errors.otherInformation?.mandate}
-                      placeholder="A and B , A and C to sign"
-                    />
-                  </div>
-                </div>
-              )}
               {/*  */}
               {/*Investment */}
-              {onPageChange === 5 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>5. </span>Investment Details
-                  </p>
-                  <FormField
-                    label="Initial Investment Amount:"
-                    name="investmentDetails.investmentamount"
-                    type="number"
-                    register={register}
-                    error={errors.investmentDetails?.investmentamount}
-                  />
-                </div>
-              )}
-              {/*  */}
-              {/*Service Required */}
-              {onPageChange === 6 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>6. </span>Service Required
-                  </p>
-                  <div className="my-4">
-                    <SelectField
+              {onPageChange === 3 && (
+                <>
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>5. </span>Investment Details
+                    </p>
+                    <FormField
+                      label="Initial Investment Amount"
+                      name="investmentDetails.investmentamount"
+                      type="number"
+                      placeholder="Enter your initial investment amount"
+                      register={register}
+                      error={errors.investmentDetails?.investmentamount}
+                    />
+                  </div>
+
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>6. </span>Service Required
+                    </p>
+                    {/* <div className="my-4">
+                      <SelectField
+                        label="Equity Trading / Dealing Service"
+                        name="serviceRequired.equitytrading"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Portfolio Management Service"
+                        name="serviceRequired.portfoliomanagement"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Investment Advisory Service"
+                        name="serviceRequired.investmentadvisory"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div>
+                    <div className="my-4">
+                      <SelectField
+                        label="Fixed Income"
+                        name="serviceRequired.fixedincome"
+                        options={[
+                          { value: "yes", label: "Yes" },
+                          { value: "no", label: "No" },
+                        ]}
+                        register={register}
+                      />
+                    </div> */}
+                    <CustomCheckbox
+                      id="equity_trading"
                       label="Equity Trading / Dealing Service"
                       name="serviceRequired.equitytrading"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
                       register={register}
+
+                      // checked={checkedItems.equitytrading}
+                      // onChange={handleChange}
                     />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
+                    <CustomCheckbox
+                      id="portfolio_management"
                       label="Portfolio Management Service"
                       name="serviceRequired.portfoliomanagement"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
                       register={register}
+                      // checked={checkedItems.portfoliomanagement}
+                      // onChange={handleChange}
                     />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
+                    <CustomCheckbox
+                      id="investment_advisory"
                       label="Investment Advisory Service"
                       name="serviceRequired.investmentadvisory"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
                       register={register}
+                      // checked={checkedItems.investmentadvisory}
+                      // onChange={handleChange}
                     />
-                  </div>
-                  <div className="my-4">
-                    <SelectField
+                    <CustomCheckbox
+                      id="fixed_income"
                       label="Fixed Income"
                       name="serviceRequired.fixedincome"
-                      options={[
-                        { value: "yes", label: "Yes" },
-                        { value: "no", label: "No" },
-                      ]}
                       register={register}
+
+                      // checked={checkedItems.fixedincome}
+                      // onChange={handleChange}
                     />
                   </div>
-                  {/* <CustomCheckbox
-                    id="equity_trading"
-                    label="Equity Trading / Dealing Service"
-                    name="serviceRequired.equitytrading"
-                    checked={checkedItems.equitytrading}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="portfolio_management"
-                    label="Portfolio Management Service"
-                    name="serviceRequired.portfoliomanagement"
-                    checked={checkedItems.portfoliomanagement}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="investment_advisory"
-                    label="Investment Advisory Service"
-                    name="serviceRequired.investmentadvisory"
-                    checked={checkedItems.investmentadvisory}
-                    onChange={handleChange}
-                  /> */}
-                  {/* <CustomCheckbox
-                    id="fixed_income"
-                    label="Fixed Income"
-                    name="serviceRequired.fixedincome"
-                    checked={checkedItems.fixedincome}
-                    onChange={handleChange}
-                  /> */}
-                </div>
-              )}
-              {/*  */}
-              {/* Indicate If You Are A Politically Exposed
-            Person (PEP) Or Affiliate To A PEP? */}
-              {onPageChange === 7 && (
-                <div className="mt-10">
-                  <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
-                    <span>7. </span>Please Indicate If You Are A Politically
-                    Exposed Person (PEP) Or Affiliate To A PEP?
-                  </p>
-                  <SelectField
-                    label="Politically Exposed:"
-                    name="politicallyExposed.ifExposed"
-                    options={[
-                      { value: "Yes", label: "Yes" },
-                      { value: "No", label: "No" },
-                    ]}
-                    register={register}
-                    error={errors.politicallyExposed?.ifExposed}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      setIfYes(e.target.value === "Yes")
-                    }
-                  />
 
-                  <div>
-                    {/*  */}
-                    {ifYes && (
-                      <div className=" mt-3 gap-3">
-                        <label className=" text-[18px] font-[400]">
-                          If yes, Please give details:
-                        </label>
-
-                        <input
-                          type="text"
-                          className="mt-1 block w-full  px-3 py-2 border-b-2  border-dashed border-b-gray-500 rounded-md accent-[#692371]  shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none"
-                          {...register("politicallyExposed.ifyesdetails")}
-                          required
-                        />
-                      </div>
-                    )}
-
-                    {/*  */}
-                    <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
-                      Politically Exposed persons are persons who are or have
-                      (in the past) entrusted with a prominent public function
-                      (e.g Head of state or Government , Governers, Local
-                      Government Chairman, Senior Politicalians Senior
-                      Government Officials, Judicial or Military Officials,
-                      Senior Executive of State Owned Corporations, Important
-                      Political Party Officials, Members of Royal Families) both
-                      in foreign counties and in Nigeria, including the family
-                      members or close associates
+                  <div className="mt-10">
+                    <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">
+                      <span>7. </span>Please Indicate If You Are A Politically
+                      Exposed Person (PEP) Or Affiliate To A PEP?
                     </p>
-                    <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
-                      I (We) confirm that the information provided for opening
-                      an account with Fortress Capital is truem We agree to
-                      terms and conditions for the operation of the account
-                    </p>
-                    {/*  */}
-                    {/* <div className=" mt-5 ">
+                    <SelectField
+                      label="Politically Exposed:"
+                      name="politicallyExposed.ifExposed"
+                      options={[
+                        { value: "Yes", label: "Yes" },
+                        { value: "No", label: "No" },
+                      ]}
+                      register={register}
+                      error={errors.politicallyExposed?.ifExposed}
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                        setIfYes(e.target.value === "Yes")
+                      }
+                    />
+
+                    <div>
+                      {/*  */}
+                      {ifYes && (
+                        <div className=" mt-3 gap-3">
+                          <label className=" text-[18px] font-[400]">
+                            If yes, Please give details:
+                          </label>
+
+                          <input
+                            type="text"
+                            className="mt-1 block w-full  px-3 py-2 border-b-2  border-dashed border-b-gray-500 rounded-md accent-[#692371]  shadow-sm focus:ring-[#692371] focus:border-[#692371] focus:outline-none"
+                            {...register("politicallyExposed.ifyesdetails")}
+                            required
+                          />
+                        </div>
+                      )}
+
+                      {/*  */}
+                      <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
+                        Politically Exposed persons are persons who are or have
+                        (in the past) entrusted with a prominent public function
+                        (e.g Head of state or Government , Governers, Local
+                        Government Chairman, Senior Politicalians Senior
+                        Government Officials, Judicial or Military Officials,
+                        Senior Executive of State Owned Corporations, Important
+                        Political Party Officials, Members of Royal Families)
+                        both in foreign counties and in Nigeria, including the
+                        family members or close associates.
+                      </p>
+                      <p className="text-neutral-600 font-[600] text-[18px] leading-[28.9px] mt-[2rem]">
+                        I (We) confirm that the information provided for opening
+                        an account with Fortress Capital is truem We agree to
+                        terms and conditions for the operation of the account.
+                      </p>
+                      {/*  */}
+                      {/* <div className=" mt-5 ">
                       <label className=" text-[18px] font-[400] mb-1">
                         Client Signature & date:
                       </label>
@@ -907,12 +724,13 @@ const CorporateAccountForm = () => {
                         />
                       </div>
                     </div> */}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
 
               {/*  */}
-              {onPageChange === 8 && ifCoperate && (
+              {onPageChange === 4 && ifCoperate && (
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
                     <p className="md:text-[24px] text-[18px] text-[#692371] font-[600] mb-4 uppercase">

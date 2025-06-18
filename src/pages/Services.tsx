@@ -168,27 +168,27 @@ function ServicesContent() {
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-white">
       {/* Hero Section */}
       <header className="w-full relative">
-        <div className="w-full flex flex-col items-center md:px-[22%] px-1 mb-9 md:text-center">
-          <h1 className="text-[42px] font-semibold text-[#f49d3f] mb-[2%] ">
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12  text-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#f49d3f] mb-4">
             Our Services
           </h1>
-          <p className="md:text-[20px]   leading-[30px] ">
+          <p className="text-base sm:text-lg lg:text-xl  text-black font-[500] leading-relaxed max-w-3xl mx-auto">
             At Fortress Capital Limited, we are committed to providing
             exceptional financial services tailored to meet the unique needs of
             our clients.
           </p>
         </div>
-        <div className="relative h-[300px] md:h-[400px] lg:h-[600px]">
+        <div className="relative h-[300px] sm:h-[400px] lg:h-[500px]">
           <img
             src={abouthero}
             alt="Services Hero"
-            className="object-cover h-full w-full relative z-30"
+            className="object-cover h-full w-full"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold px-4 text-center">
+          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+            <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-bold px-4 text-center">
               Our Services
             </h1>
           </div>
@@ -196,26 +196,28 @@ function ServicesContent() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 md:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         {/* Service Navigation - Mobile */}
-        <div className="md:hidden mb-6">
+        <div className="lg:hidden mb-8">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="w-full flex items-center justify-between px-4 py-3 bg-gray-100 rounded-lg"
+            className="w-full flex items-center justify-between px-4 py-3 bg-gray-100 rounded-lg text-gray-800 hover:bg-gray-200 transition-colors"
           >
-            <span>{selectedService?.title || "Select a Service"}</span>
-            <Menu size={24} />
+            <span className="font-medium">
+              {selectedService?.title || "Select a Service"}
+            </span>
+            <Menu size={20} />
           </button>
 
           {isMenuOpen && (
-            <div className="absolute z-50 mt-2 w-[calc(100%-2rem)] bg-white shadow-lg rounded-lg">
+            <div className="absolute z-50 mt-2 w-[calc(100%-2rem)] bg-white shadow-xl rounded-lg border border-gray-100">
               {Object.keys(serviceContent).map((serviceName) => (
                 <button
                   key={serviceName}
                   onClick={() => handleServiceChange(serviceName)}
-                  className={`w-full text-left px-4 py-3 hover:bg-gray-50 ${
+                  className={`w-full text-left px-4 py-3 text-gray-800 hover:bg-gray-50 transition-colors ${
                     selectedService?.title === serviceName
-                      ? "bg-gray-50 text-[#692371]"
+                      ? "bg-gray-50 text-[#692371] font-medium"
                       : ""
                   }`}
                 >
@@ -227,15 +229,15 @@ function ServicesContent() {
         </div>
 
         {/* Service Navigation - Desktop */}
-        <div className="hidden md:flex flex-wrap justify-center gap-4 mb-12">
+        <div className="hidden lg:flex flex-wrap justify-center gap-4 mb-16">
           {Object.keys(serviceContent).map((serviceName) => (
             <button
               key={serviceName}
               onClick={() => handleServiceChange(serviceName)}
-              className={`px-6 py-3 rounded-lg transition-all ${
+              className={`px-8 py-4 rounded-lg transition-all text-base font-medium ${
                 selectedService?.title === serviceName
                   ? "bg-[#692371] text-white"
-                  : "bg-gray-100 hover:bg-[#F49D3F] hover:text-white"
+                  : "bg-gray-100 text-gray-800 hover:bg-[#F49D3F] hover:text-white"
               }`}
             >
               {serviceName}
@@ -244,56 +246,57 @@ function ServicesContent() {
         </div>
 
         {/* Selected Service Content */}
-        {selectedService ? (
+        {selectedService && (
           <div className="max-w-4xl mx-auto">
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-[#F49D3F] mb-6">
+            <div className="space-y-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8">
                 {selectedService.title}
               </h2>
 
-              <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-xl overflow-hidden mb-8">
+              <div className="aspect-video rounded-xl overflow-hidden shadow-lg">
                 <img
                   src={selectedService.mainImage}
                   alt={selectedService.title}
-                  className="object-cover h-full w-full"
+                  className="object-cover w-full h-full"
                 />
               </div>
 
-              <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+              <div className="prose prose-lg max-w-none text-black sm:text-[18px] text-[16px] leading-relaxed">
                 {selectedService.description}
-              </p>
+              </div>
 
               {/* Detailed Content */}
-              <div className="space-y-6 md:space-y-8">
+              <div className="space-y-8">
                 {selectedService.detailedContent.map(
                   (content: any, index: number) => (
-                    <div
-                      key={index}
-                      className="bg-gray-50 p-4 md:p-6 rounded-lg"
-                    >
-                      <h3 className="text-xl md:text-2xl font-semibold text-[#692371] mb-3 md:mb-4">
+                    <div key={index} className="rounded-xl">
+                      <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-4">
                         {content.subtitle}
                       </h3>
-                      <p className="text-gray-700">{content.text}</p>
+                      <p className="text-black sm:text-[18px] text-[16px] leading-relaxed">
+                        {content.text}
+                      </p>
                     </div>
                   )
                 )}
               </div>
 
               {/* Features */}
-              <div className="mt-8 md:mt-12">
-                <h3 className="text-xl md:text-2xl font-semibold text-[#692371] mb-4 md:mb-6">
+              <div className="space-y-6">
+                <h3 className="text-xl sm:text-2xl font-semibold text-black">
                   Key Features
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                <div className="grid sm:grid-cols-2 gap-4">
                   {selectedService.features.map(
                     (feature: string, index: number) => (
                       <div
                         key={index}
-                        className="flex items-center gap-3 bg-white p-3 md:p-4 rounded-lg shadow"
+                        className="flex items-center gap-3 bg-white p-4 rounded-lg shadow-sm border border-gray-100"
                       >
                         <ArrowRight className="text-[#F49D3F] flex-shrink-0" />
-                        <span className="text-sm md:text-base">{feature}</span>
+                        <span className="text-black sm:text-[16px] text-[14px]">
+                          {feature}
+                        </span>
                       </div>
                     )
                   )}
@@ -301,29 +304,27 @@ function ServicesContent() {
               </div>
 
               {/* CTA */}
-              <div className="mt-8 md:mt-12 text-center">
+              <div className="text-center pt-8">
                 <Link to={selectedService.ctaLink}>
-                  <button className="w-full sm:w-auto bg-[#692371] text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-[#F49D3F] transition-colors">
+                  <button className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#692371] rounded-lg hover:bg-[#F49D3F] transition-colors duration-300">
                     {selectedService.ctaText}
                   </button>
                 </Link>
               </div>
             </div>
           </div>
-        ) : (
-          <div className="text-center text-gray-600 p-8">
-            Please select a service to view details
-          </div>
         )}
-        <div className="md:px-[13rem]">
-          <div className="bg-gray-50 p-1 md:p-6 rounded-xl">
-            <h3 className="text-lg md:text-xl text-gray-700 p-1">
-              At <strong> Fortress Capital Limited, </strong> we pride ourselves
+
+        {/* Footer Content */}
+        <div className="max-w-4xl mx-auto mt-16">
+          <div className=" rounded-xl">
+            <p className="text-black text-[18px] leading-relaxed">
+              At <strong>Fortress Capital Limited</strong>, we pride ourselves
               on delivering superior service and building lasting relationships
               with our clients. Our young and dynamic management team is
               dedicated to providing efficient and value-added services,
               reflecting our commitment to your financial success.
-            </h3>
+            </p>
           </div>
         </div>
       </main>
@@ -334,7 +335,6 @@ function ServicesContent() {
           <ArrowDown className="text-[#F49D3F] w-6 h-6 md:w-8 md:h-8" />
         </div>
       )}
-      {/*  */}
 
       <Footer />
     </div>

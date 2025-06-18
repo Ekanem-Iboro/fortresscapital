@@ -7,13 +7,19 @@ const FileInput = ({
   error,
   required = false,
   className = "",
+  desc = "",
+  desc2 = "",
+  multiple = false,
 }: {
   label: string;
   name: string;
   register: any;
   error?: { message?: string };
   required?: boolean;
+  desc?: string;
+  desc2?: string;
   className?: string;
+  multiple?: boolean;
 }) => {
   // const [previews, setPreviews] = useState<{ url: string; name: string }[]>([]);
 
@@ -43,16 +49,31 @@ const FileInput = ({
     <div className="w-full">
       <div className="">
         <div className="flex-1">
-          <label className="text-lg font-normal mb-2 block">{label}</label>
-          <input
-            type="file"
-            // multiple={multiple}
-            className={` block w-full px-3 py-2 border border-gray-500 rounded-md shadow-sm focus:ring-purple-700 focus:border-purple-700 focus:outline-none ${className}`}
-            {...register(name)}
-            required={required}
-            // onChange={handleFileChange}
-            accept="image/*,application/pdf"
-          />
+          <p className="text-lg font-normal mb-2 block">
+            {label} {required && <span className="text-red-500">*</span>}
+            <span className="text-gray-500 text-sm">
+              {desc} {}{" "}
+            </span>{" "}
+            <p className="text-gray-500 text-sm my-2">{desc2}</p>
+          </p>
+          <label
+            className={` text-gray-400 block w-full px-3 py-2 border border-gray-500 rounded-md shadow-sm focus:ring-purple-700 focus:border-purple-700 focus:outline-none ${className} `}
+            id={name}
+          >
+            Choose your file
+            <input
+              id={name}
+              type="file"
+              desc={desc}
+              desc2={desc2}
+              className="hidden w-full cursor-pointer"
+              multiple={multiple}
+              {...register(name)}
+              required={required}
+              // onChange={handleFileChange}
+              accept="image/*,application/pdf"
+            />
+          </label>
           <ErrorMessage error={error} />
         </div>
         {/* {previews.length > 0 && (
